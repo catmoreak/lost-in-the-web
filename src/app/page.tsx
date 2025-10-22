@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import "~/styles/game.css";
+
 
 export default function Home() {
   return (
