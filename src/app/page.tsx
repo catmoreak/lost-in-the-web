@@ -1,11 +1,11 @@
 import Link from "next/link";
-import GameCanvas from "./_components/GameCanvas";
+
 import "./game/game.css";
 
 export default function Home() {
   return (
     <main className="game-container">
-      <GameCanvas />
+
       <div className="game-content">
         <h1 className="game-title">Lost in the Web</h1>
         <p className="game-text">
