@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Lock } from 'lucide-react';
 
+
 interface MetaPuzzle3Props {
   gameState: any;
   setGameState: (state: any) => void;

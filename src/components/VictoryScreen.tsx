@@ -1,8 +1,11 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Skull, Star, Zap, Brain, Trophy } from 'lucide-react';
+import { Skull, Star, Zap, Brain, Trophy, HardDrive } from 'lucide-react';
 import GlitchEffect from './GlitchEffect';
+import CanvasConfetti from './CanvasConfetti';
+import { group } from 'console';
+import { format } from 'path';
 
 interface VictoryScreenProps {
   finalScore: number;
@@ -28,6 +31,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: Vict
       animate={{ opacity: 1 }}
       className="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-50"
     >
+      <CanvasConfetti duration={5000} />
       <GlitchEffect />
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
@@ -48,26 +52,16 @@ export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: Vict
             {rating.text}
           </p>
           <p className="text-gray-400 text-sm italic mb-4">
-            "In the digital abyss, only the worthy survive..."
+            &quot;In the digital abyss, only the worthy survive...&quot;
           </p>
         </motion.div>
-
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="space-y-6 mb-8"
-        >
+        <div className="space-y-6 mb-8">
           <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
             <div className="text-red-400 text-4xl font-bold font-mono mb-2">
               {finalScore}
             </div>
             <div className="text-red-300 text-sm font-semibold">FINAL SCORE</div>
-        
           </div>
-
-         
-
           <div className="bg-gray-800/50 border border-gray-600/30 rounded-lg p-4">
             <div className="text-gray-300 text-sm">
               <span className="font-semibold">Achievement Unlocked:</span> Survivor of the Web
@@ -76,10 +70,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: Vict
               You have navigated the labyrinth and emerged victorious.
             </div>
           </div>
-
-          
-        </motion.div>
-
+        </div>
         <motion.button
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}

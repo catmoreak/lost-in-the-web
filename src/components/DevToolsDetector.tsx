@@ -22,7 +22,7 @@ export default function DevToolsDetector({ onDevToolsToggle }: DevToolsDetectorP
           devtools.open = true;
           setIsDevToolsOpen(true);
           onDevToolsToggle(true);
-          console.log('%c◉ Perception expanded', 'color: #10b981; font-size: 14px;');
+          console.log('%c ◉ Perception expanded', 'color: #10b981; font-size: 14px;');
           console.log('%c◦ New layers are now visible', 'color: #06d6a0; font-size: 12px;');
         }
       } else {
@@ -41,7 +41,7 @@ export default function DevToolsDetector({ onDevToolsToggle }: DevToolsDetectorP
 
     
     (window as any).help = () => {
-      console.log('%c◉ GUIDANCE SYSTEM', 'color: #22d3ee; font-size: 14px; font-weight: bold;');
+      console.log('%c ◉ GUIDANCE SYSTEM', 'color: #22d3ee; font-size: 14px; font-weight: bold;');
       console.log('◦ Examine the structure beneath the surface');
       console.log('◦ Modify what seems unchangeable');
       console.log('◦ Speak the language of machines');

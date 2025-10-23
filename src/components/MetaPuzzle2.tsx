@@ -210,4 +210,3 @@ export default function MetaPuzzle2({ gameState, setGameState, onComplete }: Met
 }
 
 
-

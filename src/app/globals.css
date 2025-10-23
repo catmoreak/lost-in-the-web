@@ -315,3 +315,42 @@
     animation-duration: 10s;
   }
 }
+
+
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti-ribbon {
+  position: absolute;
+  top: -10vh;
+  will-change: transform, opacity;
+  border-radius: 4px;
+  opacity: 0.95;
+  animation: confetti-fall 4s cubic-bezier(.25,.46,.45,.94) forwards, confetti-wave 2s ease-in-out infinite alternate;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 12px rgba(255,255,255,0.1);
+  backdrop-filter: blur(1px);
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-10vh) rotate(0deg) scale(1); opacity: 1; }
+  50% { opacity: 0.9; }
+  80% { opacity: 0.7; }
+  100% { transform: translateY(110vh) rotate(1080deg) scale(0.8); opacity: 0; }
+}
+
+@keyframes confetti-wave {
+  0% { transform: translateX(0px); }
+  100% { transform: translateX(10px); }
+}
+
+.confetti--fading .confetti-ribbon {
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  opacity: 0 !important;
+  transform: translateY(110vh) scale(0.9) !important;
+}
+
+
