@@ -136,7 +136,7 @@ export default function MetaPuzzle1({ gameState, setGameState, onComplete }: Met
         </motion.div>
       )}
 
-    {/* //Here is the Secret .You found it */}
+    {/*Here is the Secret .You found it */}
       <div className="hidden" id="puzzle1-secret" data-secret="REALITY_IS_CODE">
         
       </div>

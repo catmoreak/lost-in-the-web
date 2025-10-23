@@ -1,7 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Trophy, Star, Zap, Brain } from 'lucide-react';
+import { Skull, Star, Zap, Brain, Trophy } from 'lucide-react';
+import GlitchEffect from './GlitchEffect';
 
 interface VictoryScreenProps {
   finalScore: number;
@@ -11,11 +12,11 @@ interface VictoryScreenProps {
 
 export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: VictoryScreenProps) {
   const getScoreRating = (score: number) => {
-    if (score >= 300) return { text: "MASTER HACKER", color: "text-green-400", icon: Trophy };
-    if (score >= 250) return { text: "ELITE CODER", color: "text-cyan-400", icon: Star };
-    if (score >= 200) return { text: "SKILLED NAVIGATOR", color: "text-blue-400", icon: Brain };
-    if (score >= 150) return { text: "APPRENTICE", color: "text-purple-400", icon: Zap };
-    return { text: "NOVICE", color: "text-gray-400", icon: Zap };
+    if (score >= 300) return { text: "SHADOW OVERLORD", color: "text-red-400", icon: Skull };
+    if (score >= 250) return { text: "VOID MASTER", color: "text-purple-400", icon: Trophy };
+    if (score >= 200) return { text: "DIGITAL GHOST", color: "text-cyan-400", icon: Brain };
+    if (score >= 150) return { text: "CODE WRAITH", color: "text-orange-400", icon: Star };
+    return { text: "LOST SOUL", color: "text-gray-400", icon: Zap };
   };
 
   const rating = getScoreRating(finalScore);
@@ -25,25 +26,29 @@ export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: Vict
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-50"
     >
+      <GlitchEffect />
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="bg-linear-to-br from-slate-800 to-slate-900 border border-green-500/30 rounded-2xl p-8 max-w-md w-full mx-4 text-center"
+        className="bg-linear-to-br from-gray-900 to-black border border-red-500/30 rounded-2xl p-8 max-w-lg w-full mx-4 text-center shadow-2xl shadow-red-500/20"
       >
         <motion.div
           initial={{ y: -20 }}
           animate={{ y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <IconComponent className={`w-16 h-16 mx-auto mb-4 ${rating.color}`} />
-          <h2 className="text-3xl font-bold text-transparent bg-linear-to-r from-green-400 to-cyan-400 bg-clip-text mb-2">
-            ESCAPE COMPLETE 
+          <IconComponent className={`w-20 h-20 mx-auto mb-4 ${rating.color} drop-shadow-lg`} />
+          <h2 className="text-4xl font-bold text-transparent bg-linear-to-r from-red-400 to-purple-400 bg-clip-text mb-2 font-mono tracking-wider">
+            ESCAPE FROM THE VOID
           </h2>
-          <p className={`text-xl font-bold mb-6 ${rating.color}`}>
+          <p className={`text-2xl font-bold mb-6 ${rating.color} font-mono`}>
             {rating.text}
+          </p>
+          <p className="text-gray-400 text-sm italic mb-4">
+            "In the digital abyss, only the worthy survive..."
           </p>
         </motion.div>
 
@@ -51,28 +56,27 @@ export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: Vict
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="space-y-4 mb-8"
+          className="space-y-6 mb-8"
         >
-          <div className="bg-black/50 rounded-lg p-4">
-            <div className="text-green-400 text-3xl font-bold font-mono mb-2">
+          <div className="bg-red-900/20 border border-red-500/30 rounded-lg p-6">
+            <div className="text-red-400 text-4xl font-bold font-mono mb-2">
               {finalScore}
             </div>
-            <div className="text-green-300 text-sm">FINAL SCORE</div>
+            <div className="text-red-300 text-sm font-semibold">FINAL SCORE</div>
+        
           </div>
 
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="bg-blue-900/30 rounded-lg p-3">
-              <div className="text-blue-400 font-bold">3/3</div>
-              <div className="text-blue-300">Levels Complete</div>
+         
+
+          <div className="bg-gray-800/50 border border-gray-600/30 rounded-lg p-4">
+            <div className="text-gray-300 text-sm">
+              <span className="font-semibold">Achievement Unlocked:</span> Survivor of the Web
             </div>
-            <div className="bg-orange-900/30 rounded-lg p-3">
-              <div className="text-orange-400 font-bold">{hintsUsed}</div>
-              <div className="text-orange-300">Hints Used</div>
+            <div className="text-gray-400 text-xs mt-1">
+              You have navigated the labyrinth and emerged victorious.
             </div>
           </div>
-<div className='text-gray-400 text-xs mt-2'>
-    See you again Young Hacker
-    </div>
+
           
         </motion.div>
 
@@ -81,9 +85,9 @@ export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: Vict
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.8 }}
           onClick={onRestart}
-          className="bg-linear-to-r from-green-600 to-cyan-600 hover:from-green-500 hover:to-cyan-500 text-black px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105"
+          className="bg-linear-to-r from-red-600 to-purple-600 hover:from-red-500 hover:to-purple-500 text-white px-10 py-4 rounded-lg font-bold font-mono tracking-wide transition-all duration-300 transform hover:scale-105 shadow-lg shadow-red-500/25 border border-red-500/30"
         >
-          Play Again
+          DESCEND AGAIN
         </motion.button>
       </motion.div>
     </motion.div>
