@@ -10,10 +10,12 @@ import { format } from 'path';
 interface VictoryScreenProps {
   finalScore: number;
   hintsUsed: number;
+  playerName?: string;
   onRestart: () => void;
+  onChangePlayer?: () => void;
 }
 
-export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: VictoryScreenProps) {
+export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRestart, onChangePlayer }: VictoryScreenProps) {
   const getScoreRating = (score: number) => {
     if (score >= 300) return { text: "SHADOW OVERLORD", color: "text-red-400", icon: Skull };
     if (score >= 250) return { text: "VOID MASTER", color: "text-purple-400", icon: Trophy };
@@ -70,16 +72,44 @@ export default function VictoryScreen({ finalScore, hintsUsed, onRestart }: Vict
               You have navigated the labyrinth and emerged victorious.
             </div>
           </div>
+          
+          {playerName && (
+            <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-4">
+              <div className="text-green-400 text-lg font-bold mb-1">
+                {playerName}
+              </div>
+              <div className="text-green-300 text-sm">
+                Your score has been added to the leaderboard!
+              </div>
+              <div className="text-green-400/70 text-xs mt-1">
+                Hints used: {hintsUsed} • Check the leaderboard to see your ranking
+              </div>
+            </div>
+          )}
         </div>
-        <motion.button
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          onClick={onRestart}
-          className="bg-linear-to-r from-red-600 to-purple-600 hover:from-red-500 hover:to-purple-500 text-white px-10 py-4 rounded-lg font-bold font-mono tracking-wide transition-all duration-300 transform hover:scale-105 shadow-lg shadow-red-500/25 border border-red-500/30"
-        >
-          DESCEND AGAIN
-        </motion.button>
+        <div className="flex gap-4 justify-center">
+          <motion.button
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            onClick={onRestart}
+            className="bg-linear-to-r from-red-600 to-purple-600 hover:from-red-500 hover:to-purple-500 text-white px-8 py-4 rounded-lg font-bold font-mono tracking-wide transition-all duration-300 transform hover:scale-105 shadow-lg shadow-red-500/25 border border-red-500/30"
+          >
+            PLAY AGAIN
+          </motion.button>
+          
+          {onChangePlayer && (
+            <motion.button
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.9 }}
+              onClick={onChangePlayer}
+              className="bg-linear-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white px-8 py-4 rounded-lg font-bold font-mono tracking-wide transition-all duration-300 transform hover:scale-105 shadow-lg border border-gray-500/30"
+            >
+              NEW PLAYER
+            </motion.button>
+          )}
+        </div>
       </motion.div>
     </motion.div>
   );

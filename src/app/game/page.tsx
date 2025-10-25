@@ -2,7 +2,7 @@
 import { ShieldHalf } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Eye,  Zap} from 'lucide-react';
+import { Eye, Zap } from 'lucide-react';
 import MetaPuzzle1 from '~/components/MetaPuzzle1';
 import MetaPuzzle2 from '~/components/MetaPuzzle2';
 import MetaPuzzle3 from '~/components/MetaPuzzle3';
@@ -10,8 +10,13 @@ import DevToolsDetector from '~/components/DevToolsDetector';
 import GlitchEffect from '~/components/GlitchEffect';
 import ScoreAnimation from '~/components/ScoreAnimation';
 import VictoryScreen from '~/components/VictoryScreen';
+import PlayerNameInput from '~/components/PlayerNameInput';
+import RealtimeLeaderboard from '~/components/RealtimeLeaderboard';
 
 export default function MetaRealityGame() {
+  const [playerName, setPlayerName] = useState<string>('');
+  const [gameStarted, setGameStarted] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [gameState, setGameState] = useState({
     devToolsOpen: false,
@@ -86,6 +91,29 @@ export default function MetaRealityGame() {
     console.log('You\'ve found a secret. The matrix has cracks...');
   };
 
+  const submitScore = async (finalScore: number) => {
+    try {
+      const response = await fetch('/api/leaderboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          playerName,
+          score: finalScore,
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to submit score');
+      }
+      
+      console.log('Score submitted successfully!');
+    } catch (error) {
+      console.error('Error submitting score:', error);
+    }
+  };
+
   const advanceLevel = () => {
    
     setGameState(prev => ({ ...prev, score: prev.score + 100 }));
@@ -96,9 +124,16 @@ export default function MetaRealityGame() {
     } else {
       
       setTimeout(() => {
+        const finalScore = gameState.score + 100; // Include the last level's score
+        submitScore(finalScore);
         setGameComplete(true);
       }, 2000);
     }
+  };
+
+  const handleNameSubmit = (name: string) => {
+    setPlayerName(name);
+    setGameStarted(true);
   };
 
   const restartGame = () => {
@@ -115,6 +150,13 @@ export default function MetaRealityGame() {
     });
     setGameComplete(false);
     setShowHint(false);
+  };
+
+  const goBackToNameInput = () => {
+    setPlayerName('');
+    setGameStarted(false);
+    setShowLeaderboard(false);
+    restartGame();
   };
 
   const useHint = () => {
@@ -149,6 +191,11 @@ export default function MetaRealityGame() {
     return hints[currentLevel] || "Look deeper. The surface rarely tells the whole story.";
   };
 
+  // Show name input if player hasn't entered name yet
+  if (!gameStarted) {
+    return <PlayerNameInput onNameSubmit={handleNameSubmit} />;
+  }
+
   return (
     <div className="min-h-screen bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden relative">
       <DevToolsDetector 
@@ -157,7 +204,32 @@ export default function MetaRealityGame() {
       
       {isGlitching && <GlitchEffect />}
       
-     
+      {/* Leaderboard toggle and display */}
+      <div className="fixed top-6 left-6 z-50">
+        <button
+          onClick={() => setShowLeaderboard(!showLeaderboard)}
+          className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg transition-colors border border-green-400"
+        >
+          {showLeaderboard ? 'Hide Leaderboard' : 'Show Leaderboard'}
+        </button>
+        
+        <button
+          onClick={goBackToNameInput}
+          className="ml-2 px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors"
+        >
+          Change Name
+        </button>
+      </div>
+
+      {showLeaderboard && (
+        <div className="fixed top-20 left-6 z-40">
+          <RealtimeLeaderboard 
+            currentPlayerName={playerName}
+            currentScore={gameState.score}
+          />
+        </div>
+      )}
+      
       <div className="fixed inset-0 opacity-5">
         <div className="matrix-bg"></div>
       </div>
@@ -177,7 +249,7 @@ export default function MetaRealityGame() {
                 DIGITAL ESCAPE
               </h1>
               <p className="text-sm text-green-300/70">
-                Layer {currentLevel + 1} of {levels.length}
+                Layer {currentLevel + 1} of {levels.length} • Player: {playerName}
               </p>
             </div>
           </div>
@@ -366,7 +438,9 @@ export default function MetaRealityGame() {
         <VictoryScreen
           finalScore={gameState.score}
           hintsUsed={gameState.hintsUsed}
+          playerName={playerName}
           onRestart={restartGame}
+          onChangePlayer={goBackToNameInput}
         />
       )}
 
