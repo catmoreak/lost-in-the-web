@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Play } from 'lucide-react';
 
@@ -11,6 +11,8 @@ interface PlayerNameInputProps {
 export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) {
   const [playerName, setPlayerName] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [placeholder, setPlaceholder] = useState("Digital Ghost");
+  const [mounted, setMounted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -34,7 +36,12 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
     "Console Ninja"
   ];
 
-  const randomPlaceholder = funnyPlaceholders[Math.floor(Math.random() * funnyPlaceholders.length)];
+  useEffect(() => {
+    setMounted(true);
+    
+    const randomIndex = Math.floor(Math.random() * funnyPlaceholders.length);
+    setPlaceholder(funnyPlaceholders[randomIndex] || "Digital Ghost");
+  }, []);
 
   return (
     <div className="min-h-screen bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 text-white flex items-center justify-center relative overflow-hidden">
@@ -49,17 +56,20 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
         <div className="matrix-bg"></div>
       </div>
       
-      <div className="absolute inset-0 opacity-10">
-        <div className="text-cyan-400 text-xs font-mono leading-none animate-pulse">
-          {Array.from({ length: 50 }, (_, i) => (
-            <div key={i} className="whitespace-nowrap overflow-hidden">
-              {Array.from({ length: 100 }, (_, j) => 
-                Math.random() > 0.7 ? String.fromCharCode(33 + Math.random() * 94) : ' '
-              ).join('')}
-            </div>
-          ))}
+      
+      {mounted && (
+        <div className="absolute inset-0 opacity-10">
+          <div className="text-cyan-400 text-xs font-mono leading-none animate-pulse">
+            {Array.from({ length: 50 }, (_, i) => (
+              <div key={i} className="whitespace-nowrap overflow-hidden">
+                {Array.from({ length: 100 }, (_, j) => 
+                  Math.random() > 0.7 ? String.fromCharCode(33 + Math.random() * 94) : ' '
+                ).join('')}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       <motion.div
         initial={{ opacity: 0, y: 50 }}
@@ -108,7 +118,7 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
               type="text"
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
-              placeholder={randomPlaceholder}
+              placeholder={placeholder}
               maxLength={20}
               className="w-full px-4 py-3 bg-black/70 border-2 border-cyan-500/30 rounded-lg 
                        text-white placeholder-cyan-400/50 focus:border-cyan-400 
@@ -118,7 +128,7 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
               disabled={isSubmitting}
               autoFocus
             />
-            
+           
           </div>
 
           <motion.button
