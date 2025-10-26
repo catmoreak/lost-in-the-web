@@ -191,7 +191,7 @@ export default function MetaRealityGame() {
     return hints[currentLevel] || "Look deeper. The surface rarely tells the whole story.";
   };
 
-  // Show name input if player hasn't entered name yet
+  
   if (!gameStarted) {
     return <PlayerNameInput onNameSubmit={handleNameSubmit} />;
   }
@@ -204,7 +204,7 @@ export default function MetaRealityGame() {
       
       {isGlitching && <GlitchEffect />}
       
-      {/* Leaderboard toggle and display */}
+ 
       <div className="fixed top-6 left-6 z-50">
         <button
           onClick={() => setShowLeaderboard(!showLeaderboard)}

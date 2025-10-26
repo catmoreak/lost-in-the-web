@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Player name and score are required.' }, { status: 400 });
     }
 
-    // Check if player already exists
+    
     const existingPlayer = await db
       .select()
       .from(leaderboard)
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
       .limit(1);
 
     if (existingPlayer.length > 0) {
-      // Update existing player if new score is higher
+
       if (score > existingPlayer[0]!.score) {
         const updated = await db
           .update(leaderboard)
@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(existingPlayer[0]);
       }
     } else {
-      // Create new player
+      
       const newEntry = await db
         .insert(leaderboard)
         .values({ playerName, score })
