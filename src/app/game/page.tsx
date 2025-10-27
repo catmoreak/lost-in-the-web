@@ -11,12 +11,10 @@ import GlitchEffect from '~/components/GlitchEffect';
 import ScoreAnimation from '~/components/ScoreAnimation';
 import VictoryScreen from '~/components/VictoryScreen';
 import PlayerNameInput from '~/components/PlayerNameInput';
-import RealtimeLeaderboard from '~/components/RealtimeLeaderboard';
 
 export default function MetaRealityGame() {
   const [playerName, setPlayerName] = useState<string>('');
   const [gameStarted, setGameStarted] = useState(false);
-  const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [currentLevel, setCurrentLevel] = useState(0);
   const [gameState, setGameState] = useState({
     devToolsOpen: false,
@@ -36,6 +34,50 @@ export default function MetaRealityGame() {
     type: 'gain' as 'gain' | 'loss'
   });
   const [gameComplete, setGameComplete] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+
+  useEffect(() => {
+    const savedPlayerName = localStorage.getItem('lost-in-web-player-name');
+    const savedGameStarted = localStorage.getItem('lost-in-web-game-started');
+    const savedCurrentLevel = localStorage.getItem('lost-in-web-current-level');
+    const savedGameState = localStorage.getItem('lost-in-web-game-state');
+    const savedGameComplete = localStorage.getItem('lost-in-web-game-complete');
+
+    if (savedPlayerName) {
+      setPlayerName(savedPlayerName);
+    }
+    if (savedGameStarted === 'true') {
+      setGameStarted(true);
+    }
+    if (savedCurrentLevel) {
+      setCurrentLevel(parseInt(savedCurrentLevel));
+    }
+    if (savedGameState) {
+      try {
+        const parsedState = JSON.parse(savedGameState);
+        setGameState(parsedState);
+      } catch (error) {
+        console.error('Error parsing saved game state:', error);
+      }
+    }
+    if (savedGameComplete === 'true') {
+      setGameComplete(true);
+    }
+    
+    setIsLoaded(true);
+  }, []);
+
+  
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('lost-in-web-player-name', playerName);
+      localStorage.setItem('lost-in-web-game-started', gameStarted.toString());
+      localStorage.setItem('lost-in-web-current-level', currentLevel.toString());
+      localStorage.setItem('lost-in-web-game-state', JSON.stringify(gameState));
+      localStorage.setItem('lost-in-web-game-complete', gameComplete.toString());
+    }
+  }, [playerName, gameStarted, currentLevel, gameState, gameComplete, isLoaded]);
 
   const levels = [
     {
@@ -124,7 +166,7 @@ export default function MetaRealityGame() {
     } else {
       
       setTimeout(() => {
-        const finalScore = gameState.score + 100; // Include the last level's score
+        const finalScore = gameState.score + 100; 
         submitScore(finalScore);
         setGameComplete(true);
       }, 2000);
@@ -150,13 +192,21 @@ export default function MetaRealityGame() {
     });
     setGameComplete(false);
     setShowHint(false);
+    
+   
+    localStorage.removeItem('lost-in-web-current-level');
+    localStorage.removeItem('lost-in-web-game-state');
+    localStorage.removeItem('lost-in-web-game-complete');
   };
 
   const goBackToNameInput = () => {
     setPlayerName('');
     setGameStarted(false);
-    setShowLeaderboard(false);
     restartGame();
+    
+    
+    localStorage.removeItem('lost-in-web-player-name');
+    localStorage.removeItem('lost-in-web-game-started');
   };
 
   const useHint = () => {
@@ -192,6 +242,18 @@ export default function MetaRealityGame() {
   };
 
   
+ 
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-cyan-400 font-mono">Loading reality...</p>
+        </div>
+      </div>
+    );
+  }
+  
   if (!gameStarted) {
     return <PlayerNameInput onNameSubmit={handleNameSubmit} />;
   }
@@ -203,33 +265,7 @@ export default function MetaRealityGame() {
       />
       
       {isGlitching && <GlitchEffect />}
-      
- 
-      <div className="fixed top-6 left-6 z-50">
-        <button
-          onClick={() => setShowLeaderboard(!showLeaderboard)}
-          className="px-4 py-2 bg-green-600 hover:bg-green-500 text-white rounded-lg transition-colors border border-green-400"
-        >
-          {showLeaderboard ? 'Hide Leaderboard' : 'Show Leaderboard'}
-        </button>
-        
-        <button
-          onClick={goBackToNameInput}
-          className="ml-2 px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors"
-        >
-          Change Name
-        </button>
-      </div>
 
-      {showLeaderboard && (
-        <div className="fixed top-20 left-6 z-40">
-          <RealtimeLeaderboard 
-            currentPlayerName={playerName}
-            currentScore={gameState.score}
-          />
-        </div>
-      )}
-      
       <div className="fixed inset-0 opacity-5">
         <div className="matrix-bg"></div>
       </div>

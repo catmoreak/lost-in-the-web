@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trophy, Medal, Award, TrendingUp, TrendingDown, Minus } from 'lucide-react';
 
 interface LeaderboardEntry {
   id: number;
@@ -21,7 +20,6 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [prevPositions, setPrevPositions] = useState<Record<string, number>>({});
 
   const fetchLeaderboard = async () => {
     try {
@@ -30,14 +28,6 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
         throw new Error('Failed to fetch leaderboard');
       }
       const data = await response.json();
-      
-     
-      const newPrevPositions: Record<string, number> = {};
-      leaderboard.forEach((entry, index) => {
-        newPrevPositions[entry.playerName] = index;
-      });
-      setPrevPositions(newPrevPositions);
-      
       setLeaderboard(data);
       setError(null);
     } catch (err) {
@@ -49,53 +39,35 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
 
   useEffect(() => {
     fetchLeaderboard();
-    
-    
     const interval = setInterval(fetchLeaderboard, 5000);
-    
     return () => clearInterval(interval);
   }, []);
 
-  const getRankIcon = (position: number) => {
-    switch (position) {
-      case 0:
-        return <Trophy className="w-6 h-6 text-yellow-400" />;
-      case 1:
-        return <Medal className="w-6 h-6 text-gray-300" />;
-      case 2:
-        return <Award className="w-6 h-6 text-amber-600" />;
-      default:
-        return <span className="w-6 h-6 flex items-center justify-center text-green-400 font-bold">#{position + 1}</span>;
-    }
+  const getClassification = (score: number) => {
+    if (score >= 300) return "CRITICAL";
+    if (score >= 250) return "HIGH";
+    if (score >= 200) return "MEDIUM";
+    if (score >= 150) return "LOW";
+    return "MINIMAL";
   };
 
-  const getPositionChange = (playerName: string, currentIndex: number) => {
-    const prevIndex = prevPositions[playerName];
-    if (prevIndex === undefined) return 'new';
-    if (prevIndex > currentIndex) return 'up';
-    if (prevIndex < currentIndex) return 'down';
-    return 'same';
-  };
-
-  const getChangeIcon = (change: string) => {
-    switch (change) {
-      case 'up':
-        return <TrendingUp className="w-4 h-4 text-green-400" />;
-      case 'down':
-        return <TrendingDown className="w-4 h-4 text-red-400" />;
-      case 'new':
-        return <span className="w-4 h-4 text-yellow-400 font-bold text-xs">NEW</span>;
-      default:
-        return <Minus className="w-4 h-4 text-gray-500" />;
+  const getClassificationColor = (classification: string) => {
+    switch (classification) {
+      case "CRITICAL": return "text-red-400";
+      case "HIGH": return "text-orange-400";
+      case "MEDIUM": return "text-yellow-400";
+      case "LOW": return "text-green-400";
+      case "MINIMAL": return "text-gray-400";
+      default: return "text-gray-400";
     }
   };
 
   if (loading) {
     return (
-      <div className="bg-black/80 backdrop-blur-sm border-2 border-green-500/30 rounded-lg p-6 max-w-md w-full">
+      <div className="bg-gray-900/95 border border-gray-700 rounded-lg p-6 max-w-4xl w-full backdrop-blur-sm">
         <div className="text-center">
-          <div className="animate-spin w-8 h-8 border-2 border-green-400 border-t-transparent rounded-full mx-auto mb-4"></div>
-          <p className="text-green-400">Loading leaderboard...</p>
+          <div className="w-8 h-8 border-2 border-green-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-300 font-mono">Loading security database...</p>
         </div>
       </div>
     );
@@ -103,15 +75,15 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
 
   if (error) {
     return (
-      <div className="bg-black/80 backdrop-blur-sm border-2 border-red-500/30 rounded-lg p-6 max-w-md w-full">
-        <div className="text-center text-red-400">
-          <p className="font-semibold">Error loading leaderboard</p>
-          <p className="text-sm mt-2">{error}</p>
-          <button 
+      <div className="bg-red-900/20 border border-red-500 rounded-lg p-6 max-w-4xl w-full backdrop-blur-sm">
+        <div className="text-center">
+          <h3 className="text-red-400 font-mono text-lg mb-2">CONNECTION FAILED</h3>
+          <p className="text-red-300 mb-4">{error}</p>
+          <button
             onClick={fetchLeaderboard}
-            className="mt-4 px-4 py-2 bg-red-600 hover:bg-red-500 text-white rounded transition-colors"
+            className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded font-mono transition-colors"
           >
-            Retry
+            RETRY
           </button>
         </div>
       </div>
@@ -119,82 +91,121 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
   }
 
   return (
-    <div className="bg-black/80 backdrop-blur-sm border-2 border-green-500/30 rounded-lg p-6 max-w-md w-full">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-green-300 flex items-center gap-2">
-          <Trophy className="w-7 h-7" />
-          Reality Hackers
-        </h2>
-        <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+    <div className="bg-gray-900/95 border border-gray-700 rounded-lg max-w-4xl w-full backdrop-blur-sm">
+      {/* Header */}
+      <div className="border-b border-gray-700 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-xl font-mono text-white font-bold">SECURITY LEADERBOARD</h2>
+            <p className="text-gray-400 text-sm font-mono">Threat Assessment Rankings</p>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+            <span className="text-green-400 text-xs font-mono">ONLINE</span>
+          </div>
+        </div>
       </div>
 
-      <div className="space-y-3 max-h-96 overflow-y-auto">
-        <AnimatePresence>
-          {leaderboard.map((entry, index) => {
-            const change = getPositionChange(entry.playerName, index);
-            const isCurrentPlayer = currentPlayerName === entry.playerName;
+      
+      <div className="grid grid-cols-12 gap-4 p-4 border-b border-gray-700 bg-gray-800/50">
+        <div className="col-span-1 text-gray-400 text-xs font-mono uppercase">RANK</div>
+        <div className="col-span-4 text-gray-400 text-xs font-mono uppercase">AGENT ID</div>
+        <div className="col-span-3 text-gray-400 text-xs font-mono uppercase">SCORE</div>
+        <div className="col-span-2 text-gray-400 text-xs font-mono uppercase">CLASS</div>
+        <div className="col-span-2 text-gray-400 text-xs font-mono uppercase">TIMESTAMP</div>
+      </div>
+
+
+      <div className="max-h-96 overflow-y-auto">
+        {leaderboard.map((entry, index) => {
+          const isCurrentPlayer = currentPlayerName === entry.playerName;
+          const classification = getClassification(entry.score);
+          const classColor = getClassificationColor(classification);
+          
+          return (
+            <div
+              key={entry.id}
+              className={`grid grid-cols-12 gap-4 p-4 border-b border-gray-800 hover:bg-gray-800/30 transition-colors ${
+                isCurrentPlayer ? 'bg-green-900/20 border-green-600/50' : ''
+              }`}
+            >
+             
+              <div className="col-span-1 text-white font-mono font-bold">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+              
+             
+              <div className="col-span-4">
+                <div className={`font-mono ${isCurrentPlayer ? 'text-green-300' : 'text-white'}`}>
+                  {entry.playerName}
+                </div>
+                {isCurrentPlayer && (
+                  <div className="text-green-400 text-xs font-mono">CURRENT SESSION</div>
+                )}
+              </div>
+              
+      
+              <div className="col-span-3">
+                <div className={`font-mono font-bold ${isCurrentPlayer ? 'text-green-300' : 'text-cyan-400'}`}>
+                  {entry.score.toLocaleString()}
+                </div>
+              </div>
+              
             
-            return (
-              <motion.div
-                key={entry.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className={`flex items-center justify-between p-3 rounded-lg border transition-all duration-300 ${
-                  isCurrentPlayer 
-                    ? 'bg-green-500/20 border-green-400 shadow-lg shadow-green-400/20' 
-                    : 'bg-gray-800/50 border-gray-600 hover:border-green-500/50'
-                }`}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-1">
-                    {getRankIcon(index)}
-                    {getChangeIcon(change)}
-                  </div>
-                  <div>
-                    <p className={`font-semibold ${isCurrentPlayer ? 'text-green-300' : 'text-white'}`}>
-                      {entry.playerName}
-                      {isCurrentPlayer && <span className="ml-2 text-xs text-green-400">(You)</span>}
-                    </p>
-                    <p className="text-xs text-gray-400">
-                      {new Date(entry.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-                <div className="text-right">
-                  <p className={`font-bold text-lg ${
-                    isCurrentPlayer ? 'text-green-300' : 'text-yellow-400'
-                  }`}>
-                    {entry.score.toLocaleString()}
-                  </p>
-                  <p className="text-xs text-gray-400">points</p>
-                </div>
-              </motion.div>
-            );
-          })}
-        </AnimatePresence>
+              <div className="col-span-2">
+                <span className={`${classColor} font-mono text-xs font-bold`}>
+                  {classification}
+                </span>
+              </div>
+              
+            
+              <div className="col-span-2 text-gray-400 font-mono text-xs">
+                {new Date(entry.createdAt).toLocaleDateString('en-US', { 
+                  month: '2-digit', 
+                  day: '2-digit',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
 
+  
       {leaderboard.length === 0 && (
-        <div className="text-center py-8 text-gray-400">
-          <Trophy className="w-12 h-12 mx-auto mb-4 opacity-50" />
-          <p>No scores yet</p>
-          <p className="text-sm">Be the first to hack reality!</p>
+        <div className="text-center py-12">
+          <div className="text-gray-500 font-mono text-lg mb-2">NO ACTIVE THREATS</div>
+          <div className="text-gray-600 font-mono text-sm">Security database is empty</div>
         </div>
       )}
 
       {currentPlayerName && currentScore !== undefined && (
-        <div className="mt-4 pt-4 border-t border-green-500/30">
-          <div className="text-center">
-            <p className="text-green-400 text-sm">Your Current Score</p>
-            <p className="text-green-300 font-bold text-xl">{currentScore.toLocaleString()} points</p>
+        <div className="border-t border-gray-700 p-4 bg-gray-800/30">
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <div>
+              <div className="text-gray-400 text-xs font-mono uppercase">Current Session</div>
+              <div className="text-green-400 font-mono font-bold">{currentPlayerName}</div>
+            </div>
+            <div>
+              <div className="text-gray-400 text-xs font-mono uppercase">Threat Level</div>
+              <div className="text-cyan-400 font-mono font-bold">{currentScore.toLocaleString()}</div>
+            </div>
+            <div>
+              <div className="text-gray-400 text-xs font-mono uppercase">Classification</div>
+              <div className={`${getClassificationColor(getClassification(currentScore))} font-mono font-bold text-sm`}>
+                {getClassification(currentScore)}
+              </div>
+            </div>
           </div>
         </div>
       )}
 
-      <div className="mt-4 text-center text-xs text-gray-500">
-        Updates every 5 seconds
+      
+      <div className="border-t border-gray-700 p-3 bg-gray-800/20">
+        <div className="text-center text-gray-500 text-xs font-mono">
+          Database sync: 5s intervals | Showing top security assessments
+        </div>
       </div>
     </div>
   );
