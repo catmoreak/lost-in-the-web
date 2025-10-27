@@ -95,14 +95,8 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
       {/* Header */}
       <div className="border-b border-gray-700 p-4">
         <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-mono text-white font-bold">SECURITY LEADERBOARD</h2>
-            <p className="text-gray-400 text-sm font-mono">Threat Assessment Rankings</p>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-            <span className="text-green-400 text-xs font-mono">ONLINE</span>
-          </div>
+
+          
         </div>
       </div>
 
@@ -111,8 +105,8 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
         <div className="col-span-1 text-gray-400 text-xs font-mono uppercase">RANK</div>
         <div className="col-span-4 text-gray-400 text-xs font-mono uppercase">AGENT ID</div>
         <div className="col-span-3 text-gray-400 text-xs font-mono uppercase">SCORE</div>
-        <div className="col-span-2 text-gray-400 text-xs font-mono uppercase">CLASS</div>
-        <div className="col-span-2 text-gray-400 text-xs font-mono uppercase">TIMESTAMP</div>
+        
+        <div className="col-span-4 text-gray-400 text-xs font-mono uppercase">TIMESTAMP</div>
       </div>
 
 
@@ -152,14 +146,10 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
               </div>
               
             
-              <div className="col-span-2">
-                <span className={`${classColor} font-mono text-xs font-bold`}>
-                  {classification}
-                </span>
-              </div>
+             
               
             
-              <div className="col-span-2 text-gray-400 font-mono text-xs">
+              <div className="col-span-4 text-gray-400 font-mono text-xs">
                 {new Date(entry.createdAt).toLocaleDateString('en-US', { 
                   month: '2-digit', 
                   day: '2-digit',
@@ -183,30 +173,14 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
       {currentPlayerName && currentScore !== undefined && (
         <div className="border-t border-gray-700 p-4 bg-gray-800/30">
           <div className="grid grid-cols-3 gap-4 text-center">
-            <div>
-              <div className="text-gray-400 text-xs font-mono uppercase">Current Session</div>
-              <div className="text-green-400 font-mono font-bold">{currentPlayerName}</div>
-            </div>
-            <div>
-              <div className="text-gray-400 text-xs font-mono uppercase">Threat Level</div>
-              <div className="text-cyan-400 font-mono font-bold">{currentScore.toLocaleString()}</div>
-            </div>
-            <div>
-              <div className="text-gray-400 text-xs font-mono uppercase">Classification</div>
-              <div className={`${getClassificationColor(getClassification(currentScore))} font-mono font-bold text-sm`}>
-                {getClassification(currentScore)}
-              </div>
-            </div>
+            
+         
           </div>
         </div>
       )}
 
       
-      <div className="border-t border-gray-700 p-3 bg-gray-800/20">
-        <div className="text-center text-gray-500 text-xs font-mono">
-          Database sync: 5s intervals | Showing top security assessments
-        </div>
-      </div>
+      
     </div>
   );
 }
