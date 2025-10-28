@@ -26,11 +26,8 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
   };
   
   const getScoreRating = (score: number) => {
-    if (score >= 300) return { text: "SHADOW OVERLORD", color: "text-red-400", icon: Skull, description: "Master of the Digital Realm" };
-    if (score >= 250) return { text: "VOID MASTER", color: "text-purple-400", icon: Trophy, description: "Elite Reality Hacker" };
-    if (score >= 200) return { text: "DIGITAL GHOST", color: "text-cyan-400", icon: Brain, description: "Advanced Code Navigator" };
-    if (score >= 150) return { text: "CODE WRAITH", color: "text-orange-400", icon: Star, description: "Skilled Web Explorer" };
-    return { text: "LOST SOUL", color: "text-gray-400", icon: Zap, description: "Novice Reality Seeker" };
+   
+    return { text: "Thank you for completing the levels", color: "text-gray-400", icon: Zap, description: "" };
   };
 
   const getPerformanceMetrics = () => {
@@ -98,22 +95,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
         className="bg-linear-to-br from-slate-900 via-gray-900 to-black border border-cyan-500/30 rounded-2xl p-8 max-w-2xl w-full mx-4 text-center shadow-2xl shadow-cyan-500/20"
       >
         
-        <motion.div
-          initial={{ y: -20 }}
-          animate={{ y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mb-8"
-        >
-          <div className="flex items-center justify-center mb-4">
-            <Trophy className="w-16 h-16 text-yellow-400 drop-shadow-lg mr-3" />
-            <div>
-              <h2 className="text-4xl font-bold text-transparent bg-linear-to-r from-green-400 via-cyan-400 to-purple-400 bg-clip-text font-mono">
-                MISSION COMPLETE
-              </h2>
-              <p className="text-gray-400 text-sm mt-1">Reality.exe has been successfully navigated</p>
-            </div>
-          </div>
-        </motion.div>
+     
 
    
         <motion.div
@@ -168,7 +150,30 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           </motion.div>
         </div>
 
-        
+        {playerName && (
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 1.4 }}
+            className="bg-linear-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-xl p-6 mb-8"
+          >
+            <div className="flex items-center justify-center mb-3">
+              
+              <span className="text-purple-400 text-lg font-bold font-mono">
+                {playerName}
+              </span>
+            </div>
+            <p className="text-purple-300 text-sm mb-2">
+              Your score has been immortalized in the digital realm!
+            </p>
+            <button
+              onClick={() => setShowLeaderboard(true)}
+              className="bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              View Leaderboard
+            </button>
+          </motion.div>
+        )}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -200,30 +205,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
         </motion.div>
 
         
-        {playerName && (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 1.4 }}
-            className="bg-linear-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-xl p-6 mb-8"
-          >
-            <div className="flex items-center justify-center mb-3">
-              <Brain className="w-6 h-6 text-purple-400 mr-2" />
-              <span className="text-purple-400 text-lg font-bold font-mono">
-                {playerName}
-              </span>
-            </div>
-            <p className="text-purple-300 text-sm mb-2">
-              Your score has been immortalized in the digital realm!
-            </p>
-            <button
-              onClick={() => setShowLeaderboard(true)}
-              className="bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg"
-            >
-              View Leaderboard
-            </button>
-          </motion.div>
-        )}
+        
 
       
         <div className="flex flex-col gap-4 justify-center">
