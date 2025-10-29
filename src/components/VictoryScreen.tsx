@@ -57,15 +57,15 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="bg-linear-to-br from-slate-900 to-black border border-cyan-500/30 rounded-2xl p-6 max-w-4xl w-full text-center shadow-2xl shadow-cyan-500/20 max-h-[90vh] overflow-y-auto"
+          className="bg-gray-900/95 border border-gray-700 rounded-lg p-6 max-w-4xl w-full text-center backdrop-blur-sm max-h-[90vh] overflow-y-auto"
         >
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-transparent bg-linear-to-r from-green-400 via-cyan-400 to-purple-400 bg-clip-text font-mono">
+            <h2 className="text-3xl font-bold text-white font-mono">
               GLOBAL LEADERBOARD
             </h2>
             <button
               onClick={() => setShowLeaderboard(false)}
-              className="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-colors"
+              className="px-4 py-2 bg-gray-600 hover:bg-gray-500 text-white rounded font-mono transition-colors"
             >
               Back to Results
             </button>
@@ -84,7 +84,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-50"
+      className="fixed inset-0 bg-linear-to-br from-gray-900 via-black to-gray-900 backdrop-blur-md flex items-center justify-center z-50"
     >
       <CanvasConfetti duration={5000} />
       <GlitchEffect />
@@ -92,7 +92,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="bg-linear-to-br from-slate-900 via-gray-900 to-black border border-cyan-500/30 rounded-2xl p-8 max-w-2xl w-full mx-4 text-center shadow-2xl shadow-cyan-500/20"
+        className="bg-gray-900/95 border border-cyan-500/30 rounded-lg p-8 max-w-2xl w-full mx-4 text-center backdrop-blur-sm shadow-2xl shadow-cyan-500/20"
       >
         
      
@@ -105,12 +105,24 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           className="mb-8"
         >
           <div className="flex items-center justify-center mb-4">
-            <IconComponent className={`w-12 h-12 ${rating.color} mr-3`} />
+            <motion.div
+              animate={{ 
+                scale: [1, 1.2, 1],
+                rotate: [0, 360, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <IconComponent className="w-16 h-16 text-cyan-400 mr-3 drop-shadow-lg drop-shadow-cyan-400/50" />
+            </motion.div>
             <div>
-              <h3 className={`text-2xl font-bold ${rating.color} font-mono`}>
-                {rating.text}
+              <h3 className="text-3xl font-bold font-mono bg-linear-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+                MISSION COMPLETE
               </h3>
-              <p className="text-gray-400 text-sm">{rating.description}</p>
+              <p className="text-green-400 text-sm font-mono">Security Assessment Finished</p>
             </div>
           </div>
         </motion.div>
@@ -122,13 +134,13 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
             initial={{ x: -50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 0.8 }}
-            className="bg-linear-to-r from-cyan-900/30 to-purple-900/30 border border-cyan-500/30 rounded-xl p-6"
+            className="bg-gray-800/80 border border-cyan-500/50 rounded-lg p-6 shadow-lg shadow-cyan-500/20"
           >
             <div className="flex items-center justify-center mb-2">
-              <Target className="w-6 h-6 text-cyan-400 mr-2" />
-              <span className="text-cyan-400 text-sm font-semibold">FINAL SCORE</span>
+              <Target className="w-6 h-6 text-cyan-400 mr-2 drop-shadow-lg drop-shadow-cyan-400/50" />
+              <span className="text-cyan-300 text-sm font-semibold font-mono uppercase">FINAL SCORE</span>
             </div>
-            <div className="text-4xl font-bold text-white font-mono">
+            <div className="text-4xl font-bold text-cyan-400 font-mono drop-shadow-lg drop-shadow-cyan-400/50">
               {finalScore}
             </div>
           </motion.div>
@@ -138,13 +150,13 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
             initial={{ x: 50, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             transition={{ delay: 1.0 }}
-            className="bg-linear-to-r from-green-900/30 to-cyan-900/30 border border-green-500/30 rounded-xl p-6"
+            className="bg-gray-800/80 border border-green-500/50 rounded-lg p-6 shadow-lg shadow-green-500/20"
           >
             <div className="flex items-center justify-center mb-2">
-              <TrendingUp className="w-6 h-6 text-green-400 mr-2" />
-              <span className="text-green-400 text-sm font-semibold">EFFICIENCY</span>
+              <TrendingUp className="w-6 h-6 text-green-400 mr-2 drop-shadow-lg drop-shadow-green-400/50" />
+              <span className="text-green-300 text-sm font-semibold font-mono uppercase">EFFICIENCY</span>
             </div>
-            <div className="text-4xl font-bold text-white font-mono">
+            <div className="text-4xl font-bold text-green-400 font-mono drop-shadow-lg drop-shadow-green-400/50">
               {metrics.efficiency}%
             </div>
           </motion.div>
@@ -155,51 +167,52 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 1.4 }}
-            className="bg-linear-to-r from-purple-900/30 to-pink-900/30 border border-purple-500/30 rounded-xl p-6 mb-8"
+            className="bg-gray-800/80 border border-yellow-500/50 rounded-lg p-6 mb-8 shadow-lg shadow-yellow-500/20"
           >
             <div className="flex items-center justify-center mb-3">
-              
-              <span className="text-purple-400 text-lg font-bold font-mono">
-                {playerName}
+              <span className="text-yellow-400 text-lg font-bold font-mono drop-shadow-lg drop-shadow-yellow-400/50">
+                Agent: {playerName}
               </span>
             </div>
-            <p className="text-purple-300 text-sm mb-2">
-              Your score has been immortalized in the digital realm!
+            <p className="text-gray-300 text-sm mb-4 font-mono">
+              Security clearance updated • Database synchronized
             </p>
-            <button
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setShowLeaderboard(true)}
-              className="bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-6 py-2 rounded-lg font-bold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-bold text-sm transition-all font-mono shadow-lg shadow-green-500/30 border border-green-500/50"
             >
-              View Leaderboard
-            </button>
+              VIEW LEADERBOARD
+            </motion.button>
           </motion.div>
         )}
         <motion.div
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="bg-gray-800/50 border border-gray-600/30 rounded-xl p-6 mb-8"
+          className="bg-gray-800/80 border border-purple-500/50 rounded-lg p-6 mb-8 shadow-lg shadow-purple-500/20"
         >
-          <h4 className="text-lg font-bold text-gray-300 mb-4 flex items-center">
+          <h4 className="text-lg font-bold text-purple-400 mb-4 flex items-center font-mono drop-shadow-lg drop-shadow-purple-400/50">
             <Award className="w-5 h-5 mr-2" />
-            Performance Breakdown
+            PERFORMANCE BREAKDOWN
           </h4>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div className="flex justify-between">
-              <span className="text-gray-400">Base Score:</span>
-              <span className="text-green-400 font-mono">+{metrics.baseScore}</span>
+              <span className="text-gray-300 font-mono">Base Score:</span>
+              <span className="text-green-400 font-mono font-bold">+{metrics.baseScore}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-400">Bonus Points:</span>
-              <span className="text-cyan-400 font-mono">+{metrics.bonusPoints}</span>
+              <span className="text-gray-300 font-mono">Bonus Points:</span>
+              <span className="text-cyan-400 font-mono font-bold">+{metrics.bonusPoints}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-400">Hints Used:</span>
-              <span className="text-orange-400 font-mono">{hintsUsed}</span>
+              <span className="text-gray-300 font-mono">Hints Used:</span>
+              <span className="text-orange-400 font-mono font-bold">{hintsUsed}</span>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-400">Hint Penalty:</span>
-              <span className="text-red-400 font-mono">-{metrics.hintsDeduction}</span>
+              <span className="text-gray-300 font-mono">Hint Penalty:</span>
+              <span className="text-red-400 font-mono font-bold">-{metrics.hintsDeduction}</span>
             </div>
           </div>
         </motion.div>
@@ -214,8 +227,10 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 1.6 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(34, 197, 94, 0.5)" }}
+              whileTap={{ scale: 0.95 }}
               onClick={onRestart}
-              className="bg-linear-to-r from-green-600 to-cyan-600 hover:from-green-500 hover:to-cyan-500 text-black px-8 py-4 rounded-lg font-bold font-mono tracking-wide transition-all duration-300 transform hover:scale-105 shadow-lg shadow-green-500/25 border border-green-500/30"
+              className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded font-bold font-mono tracking-wide transition-all border border-green-500/50 shadow-lg shadow-green-500/30"
             >
               PLAY AGAIN
             </motion.button>
@@ -225,10 +240,12 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 1.8 }}
+                whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(99, 102, 241, 0.5)" }}
+                whileTap={{ scale: 0.95 }}
                 onClick={onChangePlayer}
-                className="bg-linear-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white px-8 py-4 rounded-lg font-bold font-mono tracking-wide transition-all duration-300 transform hover:scale-105 shadow-lg border border-gray-500/30"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded font-bold font-mono tracking-wide transition-all border border-indigo-500/50 shadow-lg shadow-indigo-500/30"
               >
-                NEW PLAYER
+                NEW AGENT
               </motion.button>
             )}
           </div>
@@ -238,8 +255,9 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 2.0 }}
+            whileHover={{ scale: 1.02 }}
             onClick={clearAllProgress}
-            className="text-red-400 hover:text-red-300 text-sm underline transition-colors mx-auto"
+            className="text-red-400 hover:text-red-300 text-sm underline transition-colors mx-auto font-mono drop-shadow-lg"
           >
             Clear All Progress & Start Fresh
           </motion.button>

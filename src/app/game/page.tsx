@@ -1,5 +1,5 @@
 'use client';
-import { ShieldHalf } from 'lucide-react';
+import { ShieldCheck  } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Eye, Zap } from 'lucide-react';
@@ -279,13 +279,13 @@ export default function MetaRealityGame() {
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <ShieldHalf className="w-8 h-8 text-green-400" />
+            <ShieldCheck  className="w-8 h-8 text-green-400" />
             <div>
               <h1 className="text-2xl font-bold text-transparent bg-linear-to-r from-green-400 to-cyan-400 bg-clip-text font-mono">
-                DIGITAL ESCAPE
+               LOST IN THE WEB
               </h1>
               <p className="text-sm text-green-300/70">
-                Layer {currentLevel + 1} of {levels.length} • Player: {playerName}
+                Challenge {currentLevel + 1} of {levels.length} 
               </p>
             </div>
           </div>
