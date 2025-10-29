@@ -106,15 +106,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
         >
           <div className="flex items-center justify-center mb-4">
             <motion.div
-              animate={{ 
-                scale: [1, 1.2, 1],
-                rotate: [0, 360, 0]
-              }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+             
             >
               <IconComponent className="w-16 h-16 text-cyan-400 mr-3 drop-shadow-lg drop-shadow-cyan-400/50" />
             </motion.div>
@@ -122,7 +114,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
               <h3 className="text-3xl font-bold font-mono bg-linear-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
                 MISSION COMPLETE
               </h3>
-              <p className="text-green-400 text-sm font-mono">Security Assessment Finished</p>
+             
             </div>
           </div>
         </motion.div>
@@ -146,20 +138,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           </motion.div>
 
          
-          <motion.div
-            initial={{ x: 50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 1.0 }}
-            className="bg-gray-800/80 border border-green-500/50 rounded-lg p-6 shadow-lg shadow-green-500/20"
-          >
-            <div className="flex items-center justify-center mb-2">
-              <TrendingUp className="w-6 h-6 text-green-400 mr-2 drop-shadow-lg drop-shadow-green-400/50" />
-              <span className="text-green-300 text-sm font-semibold font-mono uppercase">EFFICIENCY</span>
-            </div>
-            <div className="text-4xl font-bold text-green-400 font-mono drop-shadow-lg drop-shadow-green-400/50">
-              {metrics.efficiency}%
-            </div>
-          </motion.div>
+          
         </div>
 
         {playerName && (
@@ -171,12 +150,10 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           >
             <div className="flex items-center justify-center mb-3">
               <span className="text-yellow-400 text-lg font-bold font-mono drop-shadow-lg drop-shadow-yellow-400/50">
-                Agent: {playerName}
+               <strong>Agent: {playerName}</strong> 
               </span>
             </div>
-            <p className="text-gray-300 text-sm mb-4 font-mono">
-              Security clearance updated • Database synchronized
-            </p>
+            
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -187,35 +164,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
             </motion.button>
           </motion.div>
         )}
-        <motion.div
-          initial={{ y: 30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="bg-gray-800/80 border border-purple-500/50 rounded-lg p-6 mb-8 shadow-lg shadow-purple-500/20"
-        >
-          <h4 className="text-lg font-bold text-purple-400 mb-4 flex items-center font-mono drop-shadow-lg drop-shadow-purple-400/50">
-            <Award className="w-5 h-5 mr-2" />
-            PERFORMANCE BREAKDOWN
-          </h4>
-          <div className="grid grid-cols-2 gap-4 text-sm">
-            <div className="flex justify-between">
-              <span className="text-gray-300 font-mono">Base Score:</span>
-              <span className="text-green-400 font-mono font-bold">+{metrics.baseScore}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-300 font-mono">Bonus Points:</span>
-              <span className="text-cyan-400 font-mono font-bold">+{metrics.bonusPoints}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-300 font-mono">Hints Used:</span>
-              <span className="text-orange-400 font-mono font-bold">{hintsUsed}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-gray-300 font-mono">Hint Penalty:</span>
-              <span className="text-red-400 font-mono font-bold">-{metrics.hintsDeduction}</span>
-            </div>
-          </div>
-        </motion.div>
+      
 
         
         
@@ -251,16 +200,6 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           </div>
           
 
-          <motion.button
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 2.0 }}
-            whileHover={{ scale: 1.02 }}
-            onClick={clearAllProgress}
-            className="text-red-400 hover:text-red-300 text-sm underline transition-colors mx-auto font-mono drop-shadow-lg"
-          >
-            Clear All Progress & Start Fresh
-          </motion.button>
         </div>
       </motion.div>
     </motion.div>
