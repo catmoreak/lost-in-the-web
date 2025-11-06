@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Palette, Code } from 'lucide-react';
 
@@ -10,115 +11,71 @@ interface MetaPuzzle2Props {
   onComplete: () => void;
 }
 
-const SECRET_CODE = 'CSS_REALITY_HACKER';
-const SUCCESS_DELAY = 2000;
-const ERROR_DISPLAY_TIME = 2000;
-const CSS_REVEAL_DELAY = 1000;
-
-const hiddenBoxStyles = {
-  display: 'none',
-  background: 'linear-gradient(45deg, #00ff00, #00ffff)',
-  color: '#000',
-  padding: '20px',
-  borderRadius: '10px',
-  textAlign: 'center' as const,
-  fontWeight: 'bold',
-};
-const hiddenBoxVisibleStyles = {
-  display : 'block',
-  background : 'linear-gradient(45deg, #00ff00, #00ffff)',
-color : '#000',
-  padding: '20px',
-  borderRadius: '10px',
-
-  textAlign: 'center' as const,
-  fontWeight: 'bold',
-
-}
-const errorBoxStyles = {
-  position : 'fixed' as const,
-  top : '20 px',
-  left : '50%',
-  transform : 'translateX(-50%)',
-  backgroundColor : 'rgba(255, 0, 0, 0.9)',
-  color : '#fff',
-  fontWeight : 'bold' as const,
-  padding : '16 px 32 px',
-  borderRadius : '12 px',
-  zIndex : 9999,
-  webKitURL : 'none',
-
-}
-
 export default function MetaPuzzle2({ gameState, setGameState, onComplete }: MetaPuzzle2Props) {
-  const [puzzleState, setPuzzleState] = useState({
-    hiddenElementRevealed: false,
-    cssModified: false,
-    showSuccess: false,
-    inputValue: '',
-    showError: false,
-  });
-
-  const updatePuzzleState = useCallback((updates: Partial<typeof puzzleState>) => {
-    setPuzzleState(prev => ({ ...prev, ...updates }));
-  }, []);
-
-  const handleSuccess = useCallback(() => {
-    updatePuzzleState({ showSuccess: true });
-    setTimeout(onComplete, SUCCESS_DELAY);
-  }, [onComplete, updatePuzzleState]);
+  const [hiddenElementRevealed, setHiddenElementRevealed] = useState(false);
+  const [cssModified, setCssModified] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
+    
     const hiddenBox = document.getElementById('hidden-box');
-    if (!hiddenBox || puzzleState.cssModified) return;
+    if (hiddenBox) {
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+            const element = mutation.target as HTMLElement;
+            const isVisible = element.style.display !== 'none' && 
+                            element.style.visibility !== 'hidden' &&
+                            element.style.opacity !== '0';
+            if (isVisible) {
+              setHiddenElementRevealed(true);
+              setCssModified(true);
+              console.log('🎨 Excellent! You\'ve manipulated the CSS to reveal the hidden truth!');
+              setTimeout(() => {
+                setShowSuccess(true);
+                setTimeout(onComplete, 2000);
+              }, 1000);
+            }
+          }
+        });
+      });
 
-    const isElementVisible = (element: HTMLElement) => {
-      const computedStyle = window.getComputedStyle(element);
-      return computedStyle.display !== 'none' && 
-             computedStyle.visibility !== 'hidden' &&
-             computedStyle.opacity !== '0';
-    };
+      observer.observe(hiddenBox, { 
+        attributes: true, 
+        attributeFilter: ['style'] 
+      });
 
-    const observer = new MutationObserver(() => {
-      if (isElementVisible(hiddenBox)) {
-        updatePuzzleState({ hiddenElementRevealed: true, cssModified: true });
-        console.log('🎨 Excellent! You\'ve manipulated the CSS to reveal the hidden truth!');
-        setTimeout(handleSuccess, CSS_REVEAL_DELAY);
-      }
-    });
-
-    observer.observe(hiddenBox, { 
-      attributes: true, 
-      attributeFilter: ['style', 'class'] 
-    });
-
-    return () => observer.disconnect();
-  }, [puzzleState.cssModified, handleSuccess, updatePuzzleState]);
+      return () => observer.disconnect();
+    }
+  }, [onComplete]);
 
   useEffect(() => {
+   
     console.log('%c🎨 PUZZLE 2: CSS MANIPULATION', 'color: #ff6600; font-size: 16px; font-weight: bold;');
     console.log('There\'s a hidden element on this page. You need to make it visible using CSS!');
+  
   }, []);
 
-  const handleSubmit = useCallback((e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (puzzleState.inputValue.toUpperCase() === SECRET_CODE) {
-      updatePuzzleState({ showError: false });
-      handleSuccess();
+    if (inputValue.toUpperCase() === 'CSS_REALITY_HACKER') {
+      setShowError(false);
+      setShowSuccess(true);
+      setTimeout(() => {
+        onComplete();
+      }, 2000);
     } else {
-      updatePuzzleState({ showError: true });
-      setTimeout(() => updatePuzzleState({ showError: false }), ERROR_DISPLAY_TIME);
+      setShowError(true);
+      setTimeout(() => setShowError(false), 2000);
     }
-  }, [puzzleState.inputValue, handleSuccess, updatePuzzleState]);
-
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    updatePuzzleState({ inputValue: e.target.value });
-  }, [updatePuzzleState]);
+  };
 
   return (
     <>
  
-      {puzzleState.showError && (
+      {showError && (
         <motion.div
           initial={{ y: -60, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -162,7 +119,7 @@ export default function MetaPuzzle2({ gameState, setGameState, onComplete }: Met
             </motion.div>
           )}
 
-          {puzzleState.cssModified && (
+          {cssModified && (
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -184,8 +141,8 @@ export default function MetaPuzzle2({ gameState, setGameState, onComplete }: Met
           </label>
           <input
             type="text"
-            value={puzzleState.inputValue}
-            onChange={handleInputChange}
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
             className="w-full max-w-md mx-auto bg-black/50 border border-green-500/50 rounded-lg px-6 py-3 text-green-400 focus:border-green-400 focus:outline-none font-mono text-lg text-center"
             placeholder="_ _ _   _ _ _ _ _ _ _   _ _ _ _ _ _"
           />
@@ -202,7 +159,15 @@ export default function MetaPuzzle2({ gameState, setGameState, onComplete }: Met
 
       <div 
         id="hidden-box"
-        style={hiddenBoxStyles}
+        style={{ 
+          display: 'none',
+          background: 'linear-gradient(45deg, #00ff00, #00ffff)',
+          color: '#000',
+          padding: '20px',
+          borderRadius: '10px',
+          textAlign: 'center',
+          fontWeight: 'bold'
+        }}
       >
         <h4 className="text-2xl mb-2">🎊 CONGRATULATIONS  🎊</h4>
        
@@ -226,7 +191,7 @@ export default function MetaPuzzle2({ gameState, setGameState, onComplete }: Met
       </div>
 
     
-      {puzzleState.showSuccess && (
+      {showSuccess && (
         <motion.div
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -244,5 +209,4 @@ export default function MetaPuzzle2({ gameState, setGameState, onComplete }: Met
     </>
   );
 }
-
 
