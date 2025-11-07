@@ -141,28 +141,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           
         </div>
 
-        {playerName && (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 1.4 }}
-            className="bg-gray-800/80 border border-yellow-500/50 rounded-lg p-6 mb-8 shadow-lg shadow-yellow-500/20"
-          >
-            <div className="flex items-center justify-center mb-3">
-              <span className="text-yellow-400 text-lg font-bold font-mono drop-shadow-lg drop-shadow-yellow-400/50">
-               <strong>Agent: {playerName}</strong> 
-              </span>
-            </div>
-            
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setShowLeaderboard(true)}
-              className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded font-bold text-sm transition-all font-mono shadow-lg shadow-green-500/30 border border-green-500/50"
-            >
-              VIEW LEADERBOARD
-            </motion.button>
-          </motion.div>
+        {
         )}
       
 
