@@ -3,6 +3,10 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Brain } from 'lucide-react';
+import { identifierToKeywordKind } from 'typescript';
+import { group } from 'console';
+import { getSingleStoreColumnBuilders } from 'drizzle-orm/singlestore-core/columns/all';
+import { SYSTEM_ENTRYPOINTS } from 'next/dist/shared/lib/constants';
 
 interface MetaPuzzle4Props {
   gameState: any;
@@ -136,5 +140,4 @@ export default function MetaPuzzle4({ gameState, setGameState, onComplete }: Met
         </motion.div>
       )}
     </div>
-  );
-}
+  );}

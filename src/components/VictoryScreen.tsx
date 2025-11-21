@@ -141,9 +141,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           
         </div>
 
-        {
-        )}
-      
+        
 
         
         
@@ -161,6 +159,18 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded font-bold font-mono tracking-wide transition-all border border-green-500/50 shadow-lg shadow-green-500/30"
             >
               PLAY AGAIN
+            </motion.button>
+            
+            <motion.button
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 1.7 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(255, 193, 7, 0.5)" }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowLeaderboard(true)}
+              className="bg-yellow-600 hover:bg-yellow-700 text-white px-8 py-4 rounded font-bold font-mono tracking-wide transition-all border border-yellow-500/50 shadow-lg shadow-yellow-500/30"
+            >
+              VIEW LEADERBOARD
             </motion.button>
             
             {onChangePlayer && (

@@ -6,6 +6,7 @@ import { Eye, Zap } from 'lucide-react';
 import MetaPuzzle1 from '~/components/MetaPuzzle1';
 import MetaPuzzle2 from '~/components/MetaPuzzle2';
 import MetaPuzzle3 from '~/components/MetaPuzzle3';
+import MetaPuzzle4 from '~/components/MetaPuzzle4';
 import DevToolsDetector from '~/components/DevToolsDetector';
 import GlitchEffect from '~/components/GlitchEffect';
 import ScoreAnimation from '~/components/ScoreAnimation';
@@ -94,6 +95,11 @@ export default function MetaRealityGame() {
         title : "The Ancient Cipher",
         description : "The final lock uses an ancient method of encryption.  ",
         component : MetaPuzzle3
+    },
+    {
+        title : " ",
+        description : "",
+        component : MetaPuzzle4
     }
   ];
    
@@ -236,7 +242,8 @@ export default function MetaRealityGame() {
     const hints = [
       "Inspect Element. Look for hidden secret attributes in the HTML structure.Some secrets are just a sight away",
       "Use Developer Tools (F12) to find elements with 'display: none' or 'opacity: 0'. Modify these CSS properties to reveal hidden content.",
-      "Do you know that Caesar cipher is named after Julius Caesar, the famous Roman emperor and military general."
+      "Do you know that Caesar cipher is named after Julius Caesar, the famous Roman emperor and military general.",
+      "Think about objects that have keys but don't open locks, and things that speak without mouths."
     ];
     return hints[currentLevel] || "Look deeper. The surface rarely tells the whole story.";
   };
@@ -335,7 +342,7 @@ export default function MetaRealityGame() {
                   {levels[currentLevel]?.title || "Loading..."}
                 </h2>
                 <p className="text-gray-300 text-lg">
-                  {levels[currentLevel]?.description || "Preparing the next challenge..."}
+                  {levels[currentLevel]?.description || ""}
                 </p>
               </div>
 
@@ -356,6 +363,13 @@ export default function MetaRealityGame() {
               )}
               {currentLevel === 2 && (
                 <MetaPuzzle3 
+                  gameState={gameState} 
+                  setGameState={setGameState}
+                  onComplete={advanceLevel}
+                />
+              )}
+              {currentLevel === 3 && (
+                <MetaPuzzle4 
                   gameState={gameState} 
                   setGameState={setGameState}
                   onComplete={advanceLevel}

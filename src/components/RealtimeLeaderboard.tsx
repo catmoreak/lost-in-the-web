@@ -184,3 +184,4 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
     </div>
   );
 }
+
