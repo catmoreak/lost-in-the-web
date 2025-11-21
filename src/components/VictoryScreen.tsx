@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Skull, Star, Zap, Brain, Trophy, HardDrive, Award, Target, Clock, TrendingUp } from 'lucide-react';
+import { Zap, Target, Brain } from 'lucide-react';
 import GlitchEffect from './GlitchEffect';
 import CanvasConfetti from './CanvasConfetti';
 import RealtimeLeaderboard from './RealtimeLeaderboard';
@@ -17,13 +17,6 @@ interface VictoryScreenProps {
 
 export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRestart, onChangePlayer }: VictoryScreenProps) {
   const [showLeaderboard, setShowLeaderboard] = useState(false);
-  
-  const clearAllProgress = () => {
-    
-    localStorage.clear();
-    
-    window.location.reload();
-  };
   
   const getScoreRating = (score: number) => {
    
@@ -84,7 +77,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="fixed inset-0 bg-linear-to-br from-gray-900 via-black to-gray-900 backdrop-blur-md flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black/95 backdrop-blur-md flex items-center justify-center z-50 p-4"
     >
       <CanvasConfetti duration={5000} />
       <GlitchEffect />
@@ -104,17 +97,13 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           transition={{ delay: 0.6 }}
           className="mb-8"
         >
-          <div className="flex items-center justify-center mb-4">
-            <motion.div
-             
-            >
-              <IconComponent className="w-16 h-16 text-cyan-400 mr-3 drop-shadow-lg drop-shadow-cyan-400/50" />
-            </motion.div>
+          <div className="flex items-center justify-center mb-6">
+            <IconComponent className="w-16 h-16 text-cyan-400 mr-3 drop-shadow-lg drop-shadow-cyan-400/50" />
             <div>
-              <h3 className="text-3xl font-bold font-mono bg-linear-to-r from-cyan-400 to-green-400 bg-clip-text text-transparent">
+              <h3 className="text-3xl font-bold font-mono text-cyan-400 tracking-wide">
                 MISSION COMPLETE
               </h3>
-             
+              <p className="text-gray-400 text-sm font-mono mt-1">{rating.text}</p>
             </div>
           </div>
         </motion.div>
@@ -137,7 +126,20 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
             </div>
           </motion.div>
 
-         
+          <motion.div
+            initial={{ x: 50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: 1.0 }}
+            className="bg-gray-800/80 border border-cyan-500/50 rounded-lg p-6 shadow-lg shadow-cyan-500/20"
+          >
+            <div className="flex items-center justify-center mb-2">
+              <Brain className="w-6 h-6 text-cyan-400 mr-2 drop-shadow-lg drop-shadow-cyan-400/50" />
+              <span className="text-cyan-300 text-sm font-semibold font-mono uppercase">HINTS USED</span>
+            </div>
+            <div className="text-4xl font-bold text-cyan-400 font-mono drop-shadow-lg drop-shadow-cyan-400/50">
+              {hintsUsed}
+            </div>
+          </motion.div>
           
         </div>
 
