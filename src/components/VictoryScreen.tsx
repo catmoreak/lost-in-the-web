@@ -21,15 +21,15 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
   const getScoreRating = (score: number) => {
     
     if (score >= 150) {
-      return { text: "Elite — top-tier operator", color: "text-emerald-300", icon: Zap, description: "Outstanding performance" };
+      return { text: "", color: "text-emerald-300", icon: Zap, description: "Outstanding performance" };
     }
 
     if (score >= 120) {
-      return { text: "Excellent — very impressive", color: "text-green-300", icon: Zap, description: "Strong performance" };
+      return { text: "", color: "text-green-300", icon: Zap, description: "Strong performance" };
     }
 
     if (score >= 100) {
-      return { text: "Solid win — great job", color: "text-cyan-300", icon: Zap, description: "Completed with good efficiency" };
+      return { text: "", color: "text-cyan-300", icon: Zap, description: "Completed with good efficiency" };
     }
 
     return { text: "Nice work — you finished the mission", color: "text-gray-400", icon: Zap, description: "Keep improving" };
@@ -155,12 +155,9 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <div className="text-6xl font-extrabold text-white font-mono drop-shadow-xl">{finalScore}</div>
-                  <div className="text-xs text-cyan-300 mt-1">Agent performance snapshot</div>
+                
                 </div>
-                <div className="flex flex-col items-end">
-                  <Trophy className="w-10 h-10 text-yellow-400 opacity-90 drop-shadow-md" />
-                  <div className="text-xs text-gray-300 mt-1 font-mono">Top score achieved</div>
-                </div>
+             
               </div>
             </div>
           </motion.div>
@@ -216,14 +213,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
                   <div className="text-sm font-semibold text-emerald-300 font-mono">{metrics.bonusPoints}</div>
                 </div>
               </div>
-              <div className="mt-4 rounded-md bg-black/40 border border-cyan-700/10 p-3 font-mono text-xs text-cyan-200">
-                <div className="text-xs text-gray-300 mb-1 uppercase tracking-wide">Mission log</div>
-                <pre className="whitespace-pre-wrap leading-tight text-[12px] text-cyan-200/90">{`score.recorded = ${finalScore}
-        hints.used = ${hintsUsed}
-        efficiency = ${metrics.efficiency}%
-        status = COMPLETE
-        `}</pre>
-              </div>
+             
           </motion.div>
         </div>
 
