@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Zap, Target, Brain } from 'lucide-react';
+import { Zap, Target, Brain, Trophy, Star } from 'lucide-react';
 import GlitchEffect from './GlitchEffect';
 import CanvasConfetti from './CanvasConfetti';
 import RealtimeLeaderboard from './RealtimeLeaderboard';
@@ -19,8 +19,20 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   
   const getScoreRating = (score: number) => {
-   
-    return { text: "Thank you for completing the levels", color: "text-gray-400", icon: Zap, description: "" };
+    
+    if (score >= 150) {
+      return { text: "Elite — top-tier operator", color: "text-emerald-300", icon: Zap, description: "Outstanding performance" };
+    }
+
+    if (score >= 120) {
+      return { text: "Excellent — very impressive", color: "text-green-300", icon: Zap, description: "Strong performance" };
+    }
+
+    if (score >= 100) {
+      return { text: "Solid win — great job", color: "text-cyan-300", icon: Zap, description: "Completed with good efficiency" };
+    }
+
+    return { text: "Nice work — you finished the mission", color: "text-gray-400", icon: Zap, description: "Keep improving" };
   };
 
   const getPerformanceMetrics = () => {
@@ -39,6 +51,15 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
   const rating = getScoreRating(finalScore);
   const metrics = getPerformanceMetrics();
   const IconComponent = rating.icon;
+
+  const getRank = (score: number) => {
+    if (score >= 150) return { name: 'ELITE', color: 'text-emerald-300' };
+    if (score >= 120) return { name: 'PRO', color: 'text-green-300' };
+    if (score >= 100) return { name: 'AGENT', color: 'text-cyan-300' };
+    return { name: 'NOVICE', color: 'text-gray-400' };
+  };
+
+  const rank = getRank(finalScore);
 
   if (showLeaderboard) {
     return (
@@ -85,7 +106,7 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
-        className="bg-gray-900/95 border border-cyan-500/30 rounded-lg p-8 max-w-2xl w-full mx-4 text-center backdrop-blur-sm shadow-2xl shadow-cyan-500/20"
+        className="bg-black/90 border border-cyan-600/30 rounded-2xl p-8 max-w-4xl w-full mx-4 text-left backdrop-blur-sm shadow-2xl shadow-cyan-700/20 overflow-hidden"
       >
         
      
@@ -97,50 +118,113 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
           transition={{ delay: 0.6 }}
           className="mb-8"
         >
-          <div className="flex items-center justify-center mb-6">
-            <IconComponent className="w-16 h-16 text-cyan-400 mr-3 drop-shadow-lg drop-shadow-cyan-400/50" />
-            <div>
-              <h3 className="text-3xl font-bold font-mono text-cyan-400 tracking-wide">
-                MISSION COMPLETE
-              </h3>
-              <p className="text-gray-400 text-sm font-mono mt-1">{rating.text}</p>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-4">
+              <div className="rounded-full p-2 bg-linear-to-tr from-cyan-800/40 to-transparent border border-cyan-600/20">
+                <IconComponent className="w-14 h-14 text-cyan-300 drop-shadow-lg drop-shadow-cyan-500/30" />
+              </div>
+
+              <div>
+                <h3 className="text-3xl font-bold font-mono text-cyan-300 tracking-wide">MISSION COMPLETE</h3>
+                <p className="text-sm text-gray-400 font-mono mt-1">{rating.text}</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="text-xs text-gray-300 font-mono uppercase tracking-wider">Secure Terminal</div>
+              <div className="px-3 py-1 rounded-full bg-black/70 border border-cyan-700/30 text-xs text-cyan-200 font-mono flex items-center gap-2">
+                <Star className="w-4 h-4 text-yellow-400" />
+                <div className="font-semibold text-sm">{rank.name}</div>
+              </div>
             </div>
           </div>
         </motion.div>
 
       
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+       
           <motion.div
-            initial={{ x: -50, opacity: 0 }}
+            initial={{ x: -60, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            className="bg-gray-800/80 border border-cyan-500/50 rounded-lg p-6 shadow-lg shadow-cyan-500/20"
+            transition={{ delay: 0.7 }}
+            className="relative bg-linear-to-br from-cyan-900/80 to-black/60 border border-cyan-700/30 rounded-2xl p-8 shadow-2xl shadow-cyan-700/20 flex flex-col items-center justify-center overflow-hidden"
           >
-            <div className="flex items-center justify-center mb-2">
-              <Target className="w-6 h-6 text-cyan-400 mr-2 drop-shadow-lg drop-shadow-cyan-400/50" />
-              <span className="text-cyan-300 text-sm font-semibold font-mono uppercase">FINAL SCORE</span>
-            </div>
-            <div className="text-4xl font-bold text-cyan-400 font-mono drop-shadow-lg drop-shadow-cyan-400/50">
-              {finalScore}
+            <Target className="w-10 h-10 text-cyan-300 mb-3 drop-shadow-lg drop-shadow-cyan-400/60" />
+            <div className="text-sm text-cyan-200 font-semibold tracking-wider uppercase mb-2 font-mono">Final Score</div>
+            <div className="rounded-md px-6 py-4 bg-black/30 border border-cyan-500/10 w-full">
+              <div className="flex items-end justify-between gap-4">
+                <div>
+                  <div className="text-6xl font-extrabold text-white font-mono drop-shadow-xl">{finalScore}</div>
+                  <div className="text-xs text-cyan-300 mt-1">Agent performance snapshot</div>
+                </div>
+                <div className="flex flex-col items-end">
+                  <Trophy className="w-10 h-10 text-yellow-400 opacity-90 drop-shadow-md" />
+                  <div className="text-xs text-gray-300 mt-1 font-mono">Top score achieved</div>
+                </div>
+              </div>
             </div>
           </motion.div>
 
+         
           <motion.div
-            initial={{ x: 50, opacity: 0 }}
+            initial={{ x: 60, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 1.0 }}
-            className="bg-gray-800/80 border border-cyan-500/50 rounded-lg p-6 shadow-lg shadow-cyan-500/20"
+            transition={{ delay: 0.9 }}
+            className="bg-gray-900/80 border border-cyan-700/20 rounded-2xl p-6 shadow-lg shadow-cyan-700/10 flex flex-col gap-4"
           >
-            <div className="flex items-center justify-center mb-2">
-              <Brain className="w-6 h-6 text-cyan-400 mr-2 drop-shadow-lg drop-shadow-cyan-400/50" />
-              <span className="text-cyan-300 text-sm font-semibold font-mono uppercase">HINTS USED</span>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Brain className="w-6 h-6 text-cyan-300 drop-shadow-sm" />
+                <div>
+                  <div className="text-xs text-cyan-200 font-semibold uppercase font-mono">Hints Used</div>
+                  <div className="text-2xl font-bold text-white font-mono">{hintsUsed}</div>
+                </div>
+              </div>
+              {playerName ? (
+                <div className="text-right text-sm text-gray-300 font-mono">Agent: <span className="font-semibold text-white">{playerName}</span></div>
+              ) : (
+                <div className="text-right text-sm text-gray-400 font-mono">Agent: —</div>
+              )}
             </div>
-            <div className="text-4xl font-bold text-cyan-400 font-mono drop-shadow-lg drop-shadow-cyan-400/50">
-              {hintsUsed}
+
+            <div className="pt-2">
+              <div className="flex justify-between items-center mb-2">
+                <div className="text-xs text-cyan-200 font-semibold font-mono">Efficiency</div>
+                <div className="text-xs text-gray-300 font-mono">{metrics.efficiency}%</div>
+              </div>
+              <div aria-hidden className="w-full bg-black/20 rounded-full h-3">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: `${Math.min(100, Math.max(0, metrics.efficiency))}%` }}
+                    transition={{ duration: 0.9, ease: 'easeOut' }}
+                    className="h-3 rounded-full bg-linear-to-r from-cyan-400 via-green-400 to-emerald-300 shadow-inner"
+                  />
+              </div>
             </div>
+
+            <div className="grid grid-cols-3 gap-3 text-center mt-3">
+                <div className="rounded-lg bg-black/30 p-2 border border-cyan-700/20">
+                  <div className="text-xs text-gray-300 font-mono">Base</div>
+                  <div className="text-sm font-semibold text-white font-mono">{metrics.baseScore}</div>
+                </div>
+                <div className="rounded-lg bg-black/30 p-2 border border-cyan-700/20">
+                  <div className="text-xs text-gray-300 font-mono">Deduct</div>
+                  <div className="text-sm font-semibold text-amber-400 font-mono">-{metrics.hintsDeduction}</div>
+                </div>
+                <div className="rounded-lg bg-black/30 p-2 border border-cyan-700/20">
+                  <div className="text-xs text-gray-300 font-mono">Bonus</div>
+                  <div className="text-sm font-semibold text-emerald-300 font-mono">{metrics.bonusPoints}</div>
+                </div>
+              </div>
+              <div className="mt-4 rounded-md bg-black/40 border border-cyan-700/10 p-3 font-mono text-xs text-cyan-200">
+                <div className="text-xs text-gray-300 mb-1 uppercase tracking-wide">Mission log</div>
+                <pre className="whitespace-pre-wrap leading-tight text-[12px] text-cyan-200/90">{`score.recorded = ${finalScore}
+        hints.used = ${hintsUsed}
+        efficiency = ${metrics.efficiency}%
+        status = COMPLETE
+        `}</pre>
+              </div>
           </motion.div>
-          
         </div>
 
         
@@ -194,6 +278,5 @@ export default function VictoryScreen({ finalScore, hintsUsed, playerName, onRes
         </div>
       </motion.div>
     </motion.div>
-  );
-}
+  );}
 
