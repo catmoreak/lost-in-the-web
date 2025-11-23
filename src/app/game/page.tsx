@@ -243,7 +243,7 @@ export default function MetaRealityGame() {
       "Inspect Element. Look for hidden secret attributes in the HTML structure.Some secrets are just a sight away",
       "Use Developer Tools (F12) to find elements with 'display: none' or 'opacity: 0'. Modify these CSS properties to reveal hidden content.",
       "Do you know that Caesar cipher is named after Julius Caesar, the famous Roman emperor and military general.",
-      "Think about objects that have keys but don't open locks, and things that speak without mouths."
+      "Riddle 1 : Your laptop have that !!  Riddle 2 : basic command used in Linux/Unix systems to print text or variables to the terminal."
     ];
     return hints[currentLevel] || "Look deeper. The surface rarely tells the whole story.";
   };
