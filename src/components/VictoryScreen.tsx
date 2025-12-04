@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Zap, Target, Brain, Trophy, Star } from 'lucide-react';
+import { Zap, Target, Brain, Star } from 'lucide-react';
 import GlitchEffect from './GlitchEffect';
 import CanvasConfetti from './CanvasConfetti';
 import RealtimeLeaderboard from './RealtimeLeaderboard';

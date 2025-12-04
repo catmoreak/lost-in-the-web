@@ -5,6 +5,23 @@ interface CanvasConfettiProps {
   duration?: number; 
 }
 
+interface ConfettiPiece {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  color: string;
+  shape: string;
+  angle: number;
+  spin: number;
+  vx: number;
+  vy: number;
+  gravity: number;
+  opacity: number;
+  oscillation: number;
+  time: number;
+}
+
 export default function CanvasConfetti({ duration = 5000 }: CanvasConfettiProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -33,13 +50,13 @@ export default function CanvasConfetti({ duration = 5000 }: CanvasConfettiProps)
     const shapes = ["rect", "circle", "triangle", "ribbon", "star", "diamond"];
     
     
-    const pieces = Array.from({ length: 120 }, () => ({
+    const pieces: ConfettiPiece[] = Array.from({ length: 120 }, () => ({
       x: Math.random() * window.innerWidth,
       y: -30 - Math.random() * 100,
       w: 6 + Math.random() * 16,
       h: 12 + Math.random() * 30,
-      color: colors[Math.floor(Math.random() * colors.length)],
-      shape: shapes[Math.floor(Math.random() * shapes.length)],
+      color: colors[Math.floor(Math.random() * colors.length)]!,
+      shape: shapes[Math.floor(Math.random() * shapes.length)]!,
       angle: Math.random() * Math.PI * 2,
       spin: (Math.random() - 0.5) * 0.12,
       vx: (Math.random() - 0.5) * 4,
@@ -50,7 +67,7 @@ export default function CanvasConfetti({ duration = 5000 }: CanvasConfettiProps)
       time: 0
     }));
 
-    function drawPiece(p: any) {
+    function drawPiece(p: ConfettiPiece) {
       if (!ctx) return;
       ctx.save();
       ctx.globalAlpha = p.opacity;

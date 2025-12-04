@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface LeaderboardEntry {
   id: number;
@@ -27,7 +26,7 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
       if (!response.ok) {
         throw new Error('Failed to fetch leaderboard');
       }
-      const data = await response.json();
+      const data = await response.json() as LeaderboardEntry[];
       setLeaderboard(data);
       setError(null);
     } catch (err) {
@@ -38,8 +37,10 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
   };
 
   useEffect(() => {
-    fetchLeaderboard();
-    const interval = setInterval(fetchLeaderboard, 5000);
+    void fetchLeaderboard();
+    const interval = setInterval(() => {
+      void fetchLeaderboard();
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
@@ -114,7 +115,6 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
         {leaderboard.map((entry, index) => {
           const isCurrentPlayer = currentPlayerName === entry.playerName;
           const classification = getClassification(entry.score);
-          const classColor = getClassificationColor(classification);
           
           return (
             <div
