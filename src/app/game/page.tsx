@@ -7,6 +7,7 @@ import MetaPuzzle1 from '~/components/MetaPuzzle1';
 import MetaPuzzle2 from '~/components/MetaPuzzle2';
 import MetaPuzzle3 from '~/components/MetaPuzzle3';
 import MetaPuzzle4 from '~/components/MetaPuzzle4';
+import MetaPuzzle5 from '~/components/MetaPuzzle5';
 import DevToolsDetector from '~/components/DevToolsDetector';
 import GlitchEffect from '~/components/GlitchEffect';
 import ScoreAnimation from '~/components/ScoreAnimation';
@@ -97,9 +98,14 @@ export default function MetaRealityGame() {
         component : MetaPuzzle3
     },
     {
-        title : " ",
-        description : "",
+        title : "The Mind Bender",
+        description : "Answer the riddles to escape the digital labyrinth.",
         component : MetaPuzzle4
+    },
+    {
+        title : "The Hidden Source",
+        description : "The real secrets are written in the language that creates everything.",
+        component : MetaPuzzle5
     }
   ];
    
@@ -370,6 +376,13 @@ export default function MetaRealityGame() {
               )}
               {currentLevel === 3 && (
                 <MetaPuzzle4 
+                  gameState={gameState} 
+                  setGameState={setGameState}
+                  onComplete={advanceLevel}
+                />
+              )}
+              {currentLevel === 4 && (
+                <MetaPuzzle5 
                   gameState={gameState} 
                   setGameState={setGameState}
                   onComplete={advanceLevel}
