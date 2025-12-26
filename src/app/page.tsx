@@ -58,7 +58,7 @@ export default function Home() {
     };
   }, []);
   return (
-    <div className="min-h-screen bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-r from-black via-gray-900 to-black text-green-400 relative overflow-hidden">
       
       <div className="absolute inset-0">
         <div className="particles-bg"></div>
@@ -78,9 +78,9 @@ export default function Home() {
             <div className="h-1 bg-linear-to-r from-green-400 via-cyan-400 to-purple-400 rounded mb-8 opacity-80"></div>
           </div>
           
-          <p className="text-xl text-gray-300 mb-12 leading-relaxed max-w-2xl mx-auto">
+          <p className="text-xl text-green-400 mb-12 leading-relaxed max-w-2xl mx-auto">
             You are trapped in the digital realm. The only way out is to understand the very fabric of this reality.
-            <span className="block mt-4 text-cyan-400 font-medium">
+            <span className="block mt-4 text-green-400 font-medium">
               Some paths are hidden from ordinary sight.
             </span>
           </p>
@@ -121,7 +121,7 @@ export default function Home() {
             )}
             
             {isMoving && (
-              <div className="mt-4 text-cyan-400 text-sm animate-pulse">
+              <div className="mt-4 text-green-400 text-sm animate-pulse">
                 {showBackupButton 
                   ? "The button escaped! Use the backup button above! 🏃‍♂️"
                   : "The button is escaping! Try to catch it! 🏃‍♂️"

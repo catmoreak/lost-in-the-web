@@ -252,7 +252,7 @@ export default function MetaRealityGame() {
  
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 text-white flex items-center justify-center">
+      <div className="min-h-screen bg-linear-to-r from-black via-gray-900 to-black text-green-400 flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-cyan-400 font-mono">Loading reality...</p>
@@ -266,7 +266,7 @@ export default function MetaRealityGame() {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 text-white overflow-hidden relative">
+    <div className="min-h-screen bg-linear-to-r from-black via-gray-900 to-black text-green-400 overflow-hidden relative">
       <DevToolsDetector 
         onDevToolsToggle={(open: boolean) => setGameState(prev => ({ ...prev, devToolsOpen: open }))}
       />

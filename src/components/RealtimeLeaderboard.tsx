@@ -65,10 +65,10 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
 
   if (loading) {
     return (
-      <div className="bg-gray-900/95 border border-gray-700 rounded-lg p-6 max-w-4xl w-full backdrop-blur-sm">
+      <div className="bg-black/95 border border-green-700 rounded-lg p-6 max-w-4xl w-full backdrop-blur-sm">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-green-400 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-300 font-mono">Loading security database...</p>
+          <p className="text-green-400 font-mono">Loading security database...</p>
         </div>
       </div>
     );
@@ -92,9 +92,9 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
   }
 
   return (
-    <div className="bg-gray-900/95 border border-gray-700 rounded-lg max-w-4xl w-full backdrop-blur-sm">
+    <div className="bg-black/95 border border-green-700 rounded-lg max-w-4xl w-full backdrop-blur-sm">
       {/* Header */}
-      <div className="border-b border-gray-700 p-4">
+      <div className="border-b border-green-700 p-4">
         <div className="flex items-center justify-between">
 
           
@@ -102,12 +102,12 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
       </div>
 
       
-      <div className="grid grid-cols-12 gap-4 p-4 border-b border-gray-700 bg-gray-800/50">
-        <div className="col-span-1 text-gray-400 text-xs font-mono uppercase">RANK</div>
-        <div className="col-span-4 text-gray-400 text-xs font-mono uppercase">AGENT ID</div>
-        <div className="col-span-3 text-gray-400 text-xs font-mono uppercase">SCORE</div>
+      <div className="grid grid-cols-12 gap-4 p-4 border-b border-green-700 bg-gray-800/50">
+        <div className="col-span-1 text-green-400 text-xs font-mono uppercase">RANK</div>
+        <div className="col-span-4 text-green-400 text-xs font-mono uppercase">AGENT ID</div>
+        <div className="col-span-3 text-green-400 text-xs font-mono uppercase">SCORE</div>
         
-        <div className="col-span-4 text-gray-400 text-xs font-mono uppercase">TIMESTAMP</div>
+        <div className="col-span-4 text-green-400 text-xs font-mono uppercase">TIMESTAMP</div>
       </div>
 
 
@@ -119,18 +119,18 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
           return (
             <div
               key={entry.id}
-              className={`grid grid-cols-12 gap-4 p-4 border-b border-gray-800 hover:bg-gray-800/30 transition-colors ${
+              className={`grid grid-cols-12 gap-4 p-4 border-b border-green-800 hover:bg-green-900/10 transition-colors ${
                 isCurrentPlayer ? 'bg-green-900/20 border-green-600/50' : ''
               }`}
             >
              
-              <div className="col-span-1 text-white font-mono font-bold">
+              <div className="col-span-1 text-green-400 font-mono font-bold">
                 {String(index + 1).padStart(2, '0')}
               </div>
               
              
               <div className="col-span-4">
-                <div className={`font-mono ${isCurrentPlayer ? 'text-green-300' : 'text-white'}`}>
+                <div className={`font-mono ${isCurrentPlayer ? 'text-green-300' : 'text-green-400'}`}>
                   {entry.playerName}
                 </div>
                 {isCurrentPlayer && (
@@ -140,7 +140,7 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
               
       
               <div className="col-span-3">
-                <div className={`font-mono font-bold ${isCurrentPlayer ? 'text-green-300' : 'text-cyan-400'}`}>
+                <div className={`font-mono font-bold ${isCurrentPlayer ? 'text-green-300' : 'text-green-400'}`}>
                   {entry.score.toLocaleString()}
                 </div>
               </div>
@@ -149,7 +149,7 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
              
               
             
-              <div className="col-span-4 text-gray-400 font-mono text-xs">
+              <div className="col-span-4 text-green-400 font-mono text-xs">
                 {new Date(entry.createdAt).toLocaleDateString('en-US', { 
                   month: '2-digit', 
                   day: '2-digit',
@@ -165,13 +165,13 @@ export default function RealtimeLeaderboard({ currentPlayerName, currentScore }:
   
       {leaderboard.length === 0 && (
         <div className="text-center py-12">
-          <div className="text-gray-500 font-mono text-lg mb-2">NO ACTIVE THREATS</div>
-          <div className="text-gray-600 font-mono text-sm">Security database is empty</div>
+          <div className="text-green-400 font-mono text-lg mb-2">NO ACTIVE THREATS</div>
+          <div className="text-green-500 font-mono text-sm">Security database is empty</div>
         </div>
       )}
 
       {currentPlayerName && currentScore !== undefined && (
-        <div className="border-t border-gray-700 p-4 bg-gray-800/30">
+        <div className="border-t border-green-700 p-4 bg-gray-800/30">
           <div className="grid grid-cols-3 gap-4 text-center">
             
          

@@ -44,7 +44,7 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
   }, []);
 
   return (
-    <div className="min-h-screen bg-linear-to-r from-slate-900 via-purple-900 to-slate-900 text-white flex items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen bg-linear-to-r from-black via-gray-900 to-black text-green-400 flex items-center justify-center relative overflow-hidden">
       
       
       <div className="absolute inset-0">
@@ -83,8 +83,8 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
           transition={{ delay: 0.3, duration: 0.6, type: "spring" }}
           className="mb-8"
         >
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-r from-cyan-500/20 to-purple-500/20 rounded-full border-2 border-cyan-400 mb-4">
-            <User className="w-10 h-10 text-cyan-400" />
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-r from-green-500/20 to-green-500/20 rounded-full border-2 border-green-400 mb-4">
+            <User className="w-10 h-10 text-green-400" />
           </div>
         </motion.div>
 
@@ -92,7 +92,7 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}
-          className="text-4xl font-bold mb-2 text-transparent bg-linear-to-r from-green-400 via-cyan-400 to-purple-400 bg-clip-text font-mono glitch-text"
+          className="text-4xl font-bold mb-2 text-transparent bg-linear-to-r from-green-400 via-green-400 to-green-400 bg-clip-text font-mono glitch-text"
         >
           Enter the Matrix
         </motion.h1>
@@ -101,9 +101,9 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-gray-300 mb-8 text-lg"
+          className="text-green-400 mb-8 text-lg"
         >
-          Choose your digital identity, <span className="text-cyan-400 font-medium">brave soul</span>
+          Choose your digital identity, <span className="text-green-400 font-medium">brave soul</span>
         </motion.p>
 
         <motion.form 
@@ -120,11 +120,11 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder={placeholder}
               maxLength={20}
-              className="w-full px-4 py-3 bg-black/70 border-2 border-cyan-500/30 rounded-lg 
-                       text-white placeholder-cyan-400/50 focus:border-cyan-400 
-                       focus:outline-none focus:ring-2 focus:ring-cyan-400/20 
+              className="w-full px-4 py-3 bg-black/70 border-2 border-green-500/30 rounded-lg 
+                       text-green-400 placeholder-green-400/50 focus:border-green-400 
+                       focus:outline-none focus:ring-2 focus:ring-green-400/20 
                        transition-all duration-300 text-center text-lg font-mono
-                       hover:border-purple-400/50 hover:shadow-lg hover:shadow-cyan-500/10"
+                       hover:border-green-400/50 hover:shadow-lg hover:shadow-green-500/10"
               disabled={isSubmitting}
               autoFocus
             />
@@ -136,11 +136,11 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
             disabled={playerName.trim().length < 2 || isSubmitting}
             whileHover={!isSubmitting ? { scale: 1.05 } : {}}
             whileTap={!isSubmitting ? { scale: 0.95 } : {}}
-            className="w-full px-6 py-3 bg-linear-to-r from-green-600 to-cyan-600 
-                     hover:from-green-500 hover:to-cyan-500 disabled:from-gray-600 disabled:to-gray-700
+            className="w-full px-6 py-3 bg-linear-to-r from-green-600 to-green-600 
+                     hover:from-green-500 hover:to-green-500 disabled:from-gray-600 disabled:to-gray-700
                      disabled:cursor-not-allowed text-black font-bold text-lg rounded-lg 
                      transition-all duration-300 flex items-center justify-center space-x-2 
-                     border-2 border-cyan-400 hover:shadow-xl hover:shadow-cyan-500/25
+                     border-2 border-green-400 hover:shadow-xl hover:shadow-green-500/25
                      relative overflow-hidden"
           >
             {isSubmitting ? (
@@ -161,10 +161,10 @@ export default function PlayerNameInput({ onNameSubmit }: PlayerNameInputProps) 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="mt-6 text-sm text-gray-400"
+          className="mt-6 text-sm text-green-400"
         >
           <p>Your name will appear on the global leaderboard</p>
-          <p className="text-xs mt-1 text-cyan-400">Choose wisely... or choose funny 😉</p>
+          <p className="text-xs mt-1 text-green-400">Choose wisely... or choose funny 😉</p>
         </motion.div>
       </motion.div>
     </div>
