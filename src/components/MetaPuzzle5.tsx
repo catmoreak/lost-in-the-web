@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { CheckCircle, FileText, Code } from 'lucide-react';
+import { CheckCircle } from 'lucide-react';
 
 interface MetaPuzzle5Props {
   gameState: any;
@@ -14,7 +14,6 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
   const [inputValue, setInputValue] = useState('');
   const [showSuccess, setShowSuccess] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [sourceViewed, setSourceViewed] = useState(false);
 
   useEffect(() => {
     console.log('%c� CTF CHALLENGE: Digital Forensics', 'color: #ff6600; font-size: 16px; font-weight: bold;');
@@ -24,7 +23,7 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
     
     document.cookie = "ctf_flag=RkxBRzoge0RJR0lUQUxfTUFUUklYX0NPREV9; path=/; max-age=3600";
     
-    console.log('RkxBRzoge0RJR0lUQUxfTUFUUklYX0NPREV9'); 
+    
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -33,8 +32,8 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
     if (inputValue.toUpperCase() === 'LOST{DIGITAL_MATRIX_CODE}') {
       setShowSuccess(true);
       setShowError(false);
-      console.log('%c◉ FLAG CAPTURED! You\'ve successfully completed the digital forensics challenge...', 'color: #10b981; font-size: 14px;');
-      console.log('%c◦ +150 points awarded for CTF completion', 'color: #22d3ee; font-size: 12px;');
+      
+      
       setTimeout(() => {
         onComplete();
       }, 2000);
