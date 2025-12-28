@@ -17,25 +17,31 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
   const [sourceViewed, setSourceViewed] = useState(false);
 
   useEffect(() => {
-    console.log('%c📄 PUZZLE 5: The Hidden Source', 'color: #ff6600; font-size: 16px; font-weight: bold;');
-    console.log('Sometimes the truth is hidden in plain sight, but only visible to those who know where to look...');
+    console.log('%c� CTF CHALLENGE: Digital Forensics', 'color: #ff6600; font-size: 16px; font-weight: bold;');
+    console.log('%cFlag format: LOST{...}', 'color: #ffaa00; font-size: 14px;');
+    console.log('%c💡 Hint: Check browser cookies AND console for encoded data...', 'color: #00aaff; font-size: 12px;');
+    
+    
+    document.cookie = "ctf_flag=RkxBRzoge0RJR0lUQUxfTUFUUklYX0NPREV9; path=/; max-age=3600";
+    
+    console.log('RkxBRzoge0RJR0lUQUxfTUFUUklYX0NPREV9'); 
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (inputValue.toUpperCase() === 'SOURCE_CODE_ILLUSION') {
+    if (inputValue.toUpperCase() === 'LOST{DIGITAL_MATRIX_CODE}') {
       setShowSuccess(true);
       setShowError(false);
-      console.log('%c◉ SOURCE DISCOVERED! You\'ve peered into the code that builds reality...', 'color: #10b981; font-size: 14px;');
-      console.log('%c◦ +100 points awarded', 'color: #22d3ee; font-size: 12px;');
+      console.log('%c◉ FLAG CAPTURED! You\'ve successfully completed the digital forensics challenge...', 'color: #10b981; font-size: 14px;');
+      console.log('%c◦ +150 points awarded for CTF completion', 'color: #22d3ee; font-size: 12px;');
       setTimeout(() => {
         onComplete();
       }, 2000);
     } else {
       setShowError(true);
       setTimeout(() => setShowError(false), 2000);
-      console.log('%c◦ Incorrect code. The source remains hidden...', 'color: #ef4444; font-size: 12px;');
+      console.log('%c◦ Invalid flag format. Try again...', 'color: #ef4444; font-size: 12px;');
     }
   };
 
@@ -57,38 +63,29 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
         animate={{ opacity: 1, y: 0 }}
         className="text-center"
       >
-        <h2 className="text-3xl font-bold text-green-400 mb-4">META PUZZLE 5</h2>
+        <h2 className="text-3xl font-bold text-green-400 mb-4">CTF CHALLENGE 5</h2>
         <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-          The final frontier of digital exploration. What you see on the surface is just the beginning. 
-          The real secrets are written in the language that creates everything.
+          You like cookies 🍪
         </p>
       </motion.div>
 
       <div className="bg-black/20 backdrop-blur-sm border border-green-500/30 rounded-xl p-8">
         <div className="space-y-6">
-          <div className="flex items-center justify-center gap-3 text-green-400 mb-6">
-            <FileText className="w-6 h-6" />
-            <span className="text-lg">View the Source of Reality</span>
-          </div>
-          
-          <div className="bg-black/50 border border-cyan-500/30 rounded-lg p-6 text-center">
-            <div className="text-cyan-400 font-mono text-lg mb-2">HINT:</div>
+          <div className="text-center">
+            <div className="text-6xl mb-4">🍪</div>
             <div className="text-cyan-300 text-lg">
-              Press <kbd className="bg-cyan-900/50 px-2 py-1 rounded text-cyan-200">Ctrl+U</kbd> (or <kbd className="bg-cyan-900/50 px-2 py-1 rounded text-cyan-200">Cmd+U</kbd> on Mac) to view the page source
+              Find the cookie, decode the secret
             </div>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="text-center">
-              <label className="block text-gray-300 text-lg mb-4">
-                Enter the secret found in the source:
-              </label>
               <input
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 className="w-full max-w-md mx-auto bg-black/50 border border-green-500/50 rounded-lg px-6 py-3 text-green-400 focus:border-green-400 focus:outline-none font-mono text-lg text-center"
-                placeholder="_ _ _ _ _ _   _ _ _ _   _ _ _ _ _ _ _ _"
+                placeholder="LOST{...}"
               />
             </div>
             <div className="text-center">
@@ -96,7 +93,7 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
                 type="submit"
                 className="bg-linear-to-r from-green-600 to-cyan-600 hover:from-green-500 hover:to-cyan-500 text-black px-8 py-3 rounded-lg font-bold transition-all duration-300 transform hover:scale-105"
               >
-                Submit
+                Submit Flag
               </button>
             </div>
           </form>
@@ -110,13 +107,13 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
           className="text-center"
         >
           <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-          <h4 className="text-2xl font-bold text-green-400">SOURCE MASTERED!</h4>
-          <p className="text-green-300">You've uncovered the code behind the illusion...</p>
+          <h4 className="text-2xl font-bold text-green-400">FLAG CAPTURED!</h4>
+          <p className="text-green-300">You've successfully completed the cybersecurity challenge...</p>
         </motion.div>
       )}
 
 
-      <div className="hidden" id="puzzle5-secret" data-secret="SOURCE_CODE_ILLUSION"></div>
+
     </div>
   );
 }
