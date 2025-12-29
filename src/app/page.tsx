@@ -112,7 +112,7 @@ export default function Home() {
               <div className="inline-block animate-pulse">
                 <Link 
                   href="/game" 
-                  className="game-button inline-block bg-linear-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 text-white px-12 py-4 rounded-xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25 relative overflow-hidden border-2 border-yellow-400"
+                  className="game-button inline-block bg-linear-to-r from-green-600 to-green-800 hover:from-green-500 hover:to-green-700 text-white px-12 py-4 rounded-xl font-bold text-xl transition-all duration-500 transform hover:scale-105 hover:shadow-2xl hover:shadow-green-500/25 relative overflow-hidden border-2 border-green-400"
                   onClick={resetButton}
                 >
                   <span className="relative z-10">Click Here to Start</span>
