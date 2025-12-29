@@ -89,7 +89,7 @@ export default function MetaRealityGame() {
     },
     {
       title: "The Developer's Secret",
-      description: "You must look beneath the surface. Inspect what others cannot see.",
+      description: "Kids love cookies but even Developers hide more than just cookies .Look out for the Application in the Inspect tab",
       component: MetaPuzzle2
     },
     {
