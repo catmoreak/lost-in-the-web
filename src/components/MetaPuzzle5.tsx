@@ -16,8 +16,7 @@ export default function MetaPuzzle5({ gameState, setGameState, onComplete }: Met
   const [showError, setShowError] = useState(false);
 
   useEffect(() => {
-    console.log('%c� CTF CHALLENGE: Digital Forensics', 'color: #ff6600; font-size: 16px; font-weight: bold;');
-    console.log('%cFlag format: LOST{...}', 'color: #ffaa00; font-size: 14px;');
+   
     console.log('%c💡 Hint: Check browser cookies AND console for encoded data...', 'color: #00aaff; font-size: 12px;');
     
     
